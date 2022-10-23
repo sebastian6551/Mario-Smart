@@ -1,9 +1,16 @@
 import sys, pygame
+import numpy as np
+
+with open('matriz.txt','r') as f:
+    datos = ''.join(f.readlines()).replace('\n',';')
+
+m = np.matrix(datos)
+
 pygame.init()
 
 size = width, height = 600, 600
 speed = [2, 2]
-black = 0, 0, 0
+black = 0, 0, 0 
 
 screen = pygame.display.set_mode(size)
 

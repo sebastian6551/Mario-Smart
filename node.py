@@ -7,13 +7,16 @@ class Node:
     KOOPA = 5
     FLOWER = 4
 
-    def __init__(self, state, father, operator, depth, cost):
+    def __init__(self, state, father, operator, depth, cost, star, flower):
         self.__state = state
         self.__father = father
         self.__operator = operator
         self.__depth = depth
         self.__cost = cost
+        self.__star = star  # It lasts 6 grids - cost 1/2 and they accumulate
+        self.__flower = flower  # Cost to go through a koopa when having a flower comes down to 1
         self.__marioPos = []
+        self.__awaitingCharacter = 0
 
     def getState(self):
         return self.__state
@@ -33,6 +36,18 @@ class Node:
     def getMarioPos(self):
         return self.__marioPos
 
+    def getStar(self):
+        return self.__star
+
+    def getFlower(self):
+        return self.__flower
+
+    def getState(self):
+        return self.__state.copy()
+
+    def getAwaitingCharacter(self):
+        return self.__awaitingCharacter
+
     def setState(self, newState):
         self.__state = newState
 
@@ -51,34 +66,94 @@ class Node:
     def setMarioPos(self, newMarioPos):
         self.__marioPos = newMarioPos
 
-    def getState(self):
-        return self.__state.copy()
+    def setStar(self, newStarValue):
+        self.__star = newStarValue
+
+    def setFlower(self, newFlowerValue):
+        self.__flower = newFlowerValue
+
+    def setAwaitingCharacter(self, awaitingCharacter):
+        self.__awaitingCharacter = awaitingCharacter
 
     def moveRight(self, posMario):
-        self.__state[posMario[0], posMario[1]] = 0
-        self.__state[posMario[0], posMario[1]+1] = 2
+        i = posMario[0]
+        j = posMario[1]
+        self.__state[i, j] = self.getFather().getAwaitingCharacter()
+        #print("[ " + str(i) + " ] [ " + str(j + 1) + " ]") if i == 6 else 0
+        self.takeDecision([i, j+1])
+        self.__state[i, j+1] = self.MARIO
         return self
 
     def moveLeft(self, posMario):
-        self.__state[posMario[0], posMario[1]] = 0
-        self.__state[posMario[0], posMario[1]-1] = 2
+        i = posMario[0]
+        j = posMario[1]
+        self.__state[i, j] = self.getFather().getAwaitingCharacter()
+        self.takeDecision([i, j-1])
+        self.__state[i, j-1] = self.MARIO
         return self
 
     def moveDown(self, posMario):
-        self.__state[posMario[0], posMario[1]] = 0
-        self.__state[posMario[0]+1, posMario[1]] = 2
+        i = posMario[0]
+        j = posMario[1]
+        self.__state[i, j] = self.getFather().getAwaitingCharacter()
+        self.takeDecision([i+1, j])
+        self.__state[i+1, j] = self.MARIO
         return self
 
     def moveUp(self, posMario):
-        self.__state[posMario[0], posMario[1]] = 0
-        self.__state[posMario[0]-1, posMario[1]] = 2
+        i = posMario[0]
+        j = posMario[1]
+        self.__state[i, j] = self.getFather().getAwaitingCharacter()
+        self.takeDecision([i-1, j])
+        self.__state[i-1, j] = self.MARIO
         return self
+
+    # pos is the future position of Mario
+    def takeDecision(self, pos):
+        i = pos[0]
+        j = pos[1]
+        if self.__state[i, j] == self.KOOPA:
+            # print("Koopa in position: [ " + str(i) + " ] [ " +
+            #     str(j) + " ]") if self.getFlower() > 0 else 0
+            if self.getFlower() > 0 or self.getStar() > 0:
+                self.getFather().setAwaitingCharacter(self.EMPTY)
+                self.setFlower(self.getFlower() -
+                               1 if self.getFlower() > 0 else 0)
+                self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
+            else:
+                self.setAwaitingCharacter(self.KOOPA)
+        elif self.__state[i, j] == self.FLOWER:
+            print("Cantidad de flores: " + str(self.getFlower())
+                  + " in position: [ " + str(i) + " ] [ " + str(j) + " ]") if self.getFlower() > 0 else 0
+            if self.getStar() == 0:  # Mario can get the flower
+                self.setFlower(self.getFlower() + 1)
+            else:
+                self.getFather().setAwaitingCharacter(self.FLOWER)
+        elif self.__state[i, j] == self.STAR:
+            print("Cantidad de estrellas: " + str(self.getStar())
+                  + " in position: [ " + str(i) + " ] [ " + str(j) + " ]") if self.getStar() > 0 else 0
+            if self.getFlower() == 0:  # Mario can get the star
+                self.setStar(self.getStar() + 6)
+            else:
+                self.getFather().setAwaitingCharacter(self.STAR)
+        else:
+            self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
+            self.getFather().setAwaitingCharacter(self.EMPTY)
 
     def showDepth(self):
         print("The node's depth is: " + str(self.profundidad))
 
     def showOperator(self):
         print("The operator used to get to this node was: " + self.operador)
+
+    def recreateSolution(self):
+        directions = []
+        currentNode = self
+        while currentNode.getOperator() != "first father":
+            directions.append(str(currentNode.getOperator(
+            )) + " " + str(currentNode.getFlower()) + " " + str(currentNode.getStar()))
+            currentNode = currentNode.getFather()
+        return directions
 
     def searchForMario(self):
         marioPos = []  # Mario position [x,y]

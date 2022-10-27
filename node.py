@@ -113,8 +113,6 @@ class Node:
         i = pos[0]
         j = pos[1]
         if self.__state[i, j] == self.KOOPA:
-            # print("Koopa in position: [ " + str(i) + " ] [ " +
-            #     str(j) + " ]") if self.getFlower() > 0 else 0
             if self.getFlower() > 0 or self.getStar() > 0:
                 self.getFather().setAwaitingCharacter(self.EMPTY)
                 self.setFlower(self.getFlower() -
@@ -123,22 +121,18 @@ class Node:
             else:
                 self.setAwaitingCharacter(self.KOOPA)
         elif self.__state[i, j] == self.FLOWER:
-            print("Cantidad de flores: " + str(self.getFlower())
-                  + " in position: [ " + str(i) + " ] [ " + str(j) + " ]") if self.getFlower() > 0 else 0
             if self.getStar() == 0:  # Mario can get the flower
                 self.setFlower(self.getFlower() + 1)
             else:
-                self.getFather().setAwaitingCharacter(self.FLOWER)
+                self.setAwaitingCharacter(self.FLOWER)
         elif self.__state[i, j] == self.STAR:
-            print("Cantidad de estrellas: " + str(self.getStar())
-                  + " in position: [ " + str(i) + " ] [ " + str(j) + " ]") if self.getStar() > 0 else 0
             if self.getFlower() == 0:  # Mario can get the star
                 self.setStar(self.getStar() + 6)
             else:
-                self.getFather().setAwaitingCharacter(self.STAR)
+                self.setAwaitingCharacter(self.STAR)
         else:
             self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
-            self.getFather().setAwaitingCharacter(self.EMPTY)
+            self.setAwaitingCharacter(self.EMPTY)
 
     def showDepth(self):
         print("The node's depth is: " + str(self.profundidad))

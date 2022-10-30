@@ -53,175 +53,171 @@ while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
 # print(currentNode.getState())
 # print(currentNode.recreateSolution())
 solution = currentNode.recreateSolutionWorld()
-solution2 = solution[::-1]
+solutionWorld = solution[::-1]
 
 
-# Definimos algunos colores
-PINK = (255, 0, 255)  # Flower 4
-NEGRO = (0, 0, 0)
-BLANCO = (255, 255, 255)  # Empty 0
-VERDE = (0, 255, 0)  # Koopa 5
-ROJO = (255, 0, 0)  # Mario 2
-PURPLE = (128, 0, 128)
-YELLOW = (255, 255, 0)  # princesa 6
-salom = (250, 128, 114)  # Start 3
-brown = (139, 69, 19)  # Obstaculo 1
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+BROWN = (139, 69, 19)  # BLOCK 1
 
+# Set the length and width of each grid cell.
+LENGTHCELL = 45
+HIGHCELL = 45
 
-# Establecemos el LARGO y ALTO de cada celda de la retícula.
-LARGO = 45
-ALTO = 45
+# Set the margin between the cells.
+MARGIN = 5
 
-# Establecemos el margen entre las celdas.
-MARGEN = 5
+grid = solutionWorld[0]
 
-# Creamos un array bidimensional. Un array bidimensional
-# no es más que una lista de listas.
-grid = solution2[0]
-
-# Inicializamos pygame
+# Initialize pygame
 pygame.init()
 
-# Establecemos el LARGO y ALTO de la pantalla
-DIMENSION_VENTANA = [510, 510]  # 255,255
-pantalla = pygame.display.set_mode(DIMENSION_VENTANA)
+# Set the length and width of the screen
+WINDOW_DIMENSION = [510, 510]  # 255,255
+screen = pygame.display.set_mode(WINDOW_DIMENSION)
 
-# Establecemos el título de la pantalla.
+# Set the title of the screen.
 pygame.display.set_caption("Mario smart")
 
-# Iteramos hasta que el usuario pulse el botón de salir.
-hecho = False
+# iterate until the user presses the exit button.
+press = False
 
-# Lo usamos para establecer cuán rápido de refresca la pantalla.
-reloj = pygame.time.Clock()
+# use it to set how fast the screen refreshes.
+clock = pygame.time.Clock()
 
 i = 1
-imagen_protagonista = pygame.image.load("mario.jpg").convert()
-imagen_koopa = pygame.image.load("koopa.jpg").convert()
-imagen_princess = pygame.image.load("princess2.jpg").convert()
-imagen_start = pygame.image.load("start.jpg").convert()
-imagen_flower = pygame.image.load("flower.jpg").convert()
-# -------- Bucle Principal del Programa-----------
-while not hecho:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            hecho = True
-    # Establecemos el fondo de pantalla.
-    pantalla.fill(NEGRO)
+imgMario = pygame.image.load("mario.jpg").convert()
+imgKoopa = pygame.image.load("koopa.jpg").convert()
+imgPrincess = pygame.image.load("princess2.jpg").convert()
+imgStart = pygame.image.load("start.jpg").convert()
+imgFlower = pygame.image.load("flower.jpg").convert()
 
-    # Dibujamos la retícula
-    for fila in range(10):
-        for columna in range(10):
-            #color = BLANCO
-            if (grid[fila, columna] != 1 and grid[fila, columna] != 2 and grid[fila, columna] != 5 and grid[fila, columna] != 3 and grid[fila, columna] != 4 and grid[fila, columna] != 6):
-                color = BLANCO
-                pygame.draw.rect(pantalla,
+
+# -------- Main Program Loop-----------
+while not press:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            press = True
+
+   # Set the screen background.
+    screen.fill(BLACK)
+
+    # draw the grid
+    for row in range(10):
+        for column in range(10):
+            if (grid[row, column] != 1 and grid[row, column] != 2 and grid[row, column] != 5 and grid[row, column] != 3 and grid[row, column] != 4 and grid[row, column] != 6):
+                color = WHITE
+                pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                     LARGO,
-                                     ALTO])
-            if grid[fila, columna] == 1:
-                color = brown
-                pygame.draw.rect(pantalla,
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                     LENGTHCELL,
+                                     HIGHCELL])
+            if grid[row, column] == 1:
+                color = BROWN
+                pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                     LARGO,
-                                     ALTO])
-            if grid[fila, columna] == 2:
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                     LENGTHCELL,
+                                     HIGHCELL])
+            if grid[row, column] == 2:
+
+                imagen_redimensionada = pygame.transform.scale(
+                    imgMario, (45, 45))
+                screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                    (MARGIN+HIGHCELL) *
+                                                    row + MARGIN,
+                                                    LENGTHCELL,
+                                                    HIGHCELL])
+                """
                 color = ROJO
-                imagen_redimensionada = pygame.transform.scale(
-                    imagen_protagonista, (45, 45))
-                pantalla.blit(imagen_redimensionada, [(MARGEN+LARGO) * columna + MARGEN,
-                                                      (MARGEN+ALTO) *
-                                                      fila + MARGEN,
-                                                      LARGO,
-                                                      ALTO])
-                """pygame.draw.rect(pantalla,
+                pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                     LARGO,
-                                     ALTO])"""
-            if grid[fila, columna] == 5:
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                     LENGTHCELL,
+                                     HIGHCELL])"""
+            if grid[row, column] == 5:
+
+                imagen_redimensionada = pygame.transform.scale(
+                    imgKoopa, (45, 45))
+                screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                    (MARGIN+HIGHCELL) *
+                                                    row + MARGIN,
+                                                    LENGTHCELL,
+                                                    HIGHCELL])
+                """
                 color = VERDE
+                pygame.draw.rect(screen,
+                                 color,
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                  LENGTHCELL,
+                                  HIGHCELL])"""
+            if grid[row, column] == 3:
 
                 imagen_redimensionada = pygame.transform.scale(
-                    imagen_koopa, (45, 45))
-                pantalla.blit(imagen_redimensionada, [(MARGEN+LARGO) * columna + MARGEN,
-                                                      (MARGEN+ALTO) *
-                                                      fila + MARGEN,
-                                                      LARGO,
-                                                      ALTO])
-                """pygame.draw.rect(pantalla,
-                                 color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                  LARGO,
-                                  ALTO])"""
-            if grid[fila, columna] == 3:
+                    imgStart, (45, 45))
+                screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                    (MARGIN+HIGHCELL) *
+                                                    row + MARGIN,
+                                                    LENGTHCELL,
+                                                    HIGHCELL])
+                """
                 color = salom
-                imagen_redimensionada = pygame.transform.scale(
-                    imagen_start, (45, 45))
-                pantalla.blit(imagen_redimensionada, [(MARGEN+LARGO) * columna + MARGEN,
-                                                      (MARGEN+ALTO) *
-                                                      fila + MARGEN,
-                                                      LARGO,
-                                                      ALTO])
-                """pygame.draw.rect(pantalla,
+                pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                  LARGO,
-                                  ALTO])"""
-            if grid[fila, columna] == 4:
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                  LENGTHCELL,
+                                  HIGHCELL])"""
+            if grid[row, column] == 4:
+
+                imagen_redimensionada = pygame.transform.scale(
+                    imgFlower, (45, 45))
+                screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                    (MARGIN+HIGHCELL) *
+                                                    row + MARGIN,
+                                                    LENGTHCELL,
+                                                    HIGHCELL])
+                """
                 color = PINK
-                imagen_redimensionada = pygame.transform.scale(
-                    imagen_flower, (45, 45))
-                pantalla.blit(imagen_redimensionada, [(MARGEN+LARGO) * columna + MARGEN,
-                                                      (MARGEN+ALTO) *
-                                                      fila + MARGEN,
-                                                      LARGO,
-                                                      ALTO])
-                """pygame.draw.rect(pantalla,
+                pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                  LARGO,
-                                  ALTO])"""
-            if grid[fila, columna] == 6:
-                color = YELLOW
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                  LENGTHCELL,
+                                  HIGHCELL])"""
+            if grid[row, column] == 6:
 
                 imagen_redimensionada = pygame.transform.scale(
-                    imagen_princess, (45, 45))
-                pantalla.blit(imagen_redimensionada, [(MARGEN+LARGO) * columna + MARGEN,
-                                                      (MARGEN+ALTO) *
-                                                      fila + MARGEN,
-                                                      LARGO,
-                                                      ALTO])
-            """ pygame.draw.rect(pantalla,
+                    imgPrincess, (45, 45))
+                screen.blit(imagen_redimensionada, [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                                    (MARGIN+HIGHCELL) *
+                                                    row + MARGIN,
+                                                    LENGTHCELL,
+                                                    HIGHCELL])
+            """ 
+            color = YELLOW
+            pygame.draw.rect(screen,
                                  color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                  LARGO,
-                                  ALTO])"""
-            """else:
-                color = BLANCO
-                pygame.draw.rect(pantalla,
-                                 color,
-                                 [(MARGEN+LARGO) * columna + MARGEN,
-                                  (MARGEN+ALTO) * fila + MARGEN,
-                                  LARGO,
-                                  ALTO])"""
+                                 [(MARGIN+LENGTHCELL) * column + MARGIN,
+                                  (MARGIN+HIGHCELL) * row + MARGIN,
+                                  LENGTHCELL,
+                                  HIGHCELL])"""
 
-    # Limitamos a 60 fotogramas por segundo.
-    reloj.tick(1)
-    grid = solution2[i]
-    i += 1
+    # limit to 1 frames per second.
+    clock.tick(1)
 
-    # Avanzamos y actualizamos la pantalla con lo que hemos dibujado.
+    # update world
+    grid = solutionWorld[i]
+    # check that the length is not exceeded
+    if (not (i+1 >= len(solutionWorld))):
+        i += 1
+
+    # advance and update the screen with what we have drawn.
     pygame.display.flip()
 
-# Pórtate bien con el IDLE.
+# Close
 # pygame.quit()

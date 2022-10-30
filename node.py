@@ -149,6 +149,14 @@ class Node:
             currentNode = currentNode.getFather()
         return directions
 
+    def recreateSolutionWorld(self):
+        directions = []
+        currentNode = self
+        while currentNode.getOperator() != "first father":
+            directions.append(currentNode.getState())
+            currentNode = currentNode.getFather()
+        return directions
+
     def searchForMario(self):
         marioPos = []  # Mario position [x,y]
         arr3 = self.__state

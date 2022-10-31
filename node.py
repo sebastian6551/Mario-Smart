@@ -76,8 +76,8 @@ class Node:
         self.__awaitingCharacter = awaitingCharacter
 
     def compareState(self, father, operador):  # True: The state changed
-        if (father.__operator == operador):
-            if (father.__star > 0 and self.__star <= 0 or father.__flower > 0 and self.__flower <= 0):
+        if (father.getOperator() == operador):
+            if (fatherNode.getStar() > 0 and self.getStar() <= 0 or fatherNode.getFlower() > 0 and self.getFlower() <= 0):
                 return True
             else:
                 return False
@@ -86,26 +86,17 @@ class Node:
     def compareStateCicle(self, father, operador):
         currentNode = self
         fatherNode = father
-        op = operador
-        while currentNode.getOperator() != "first father":
-            if (fatherNode.__operator == op):
-                if (fatherNode.__star > 0 and currentNode.__star <= 0 or father.__flower > 0 and currentNode.__flower <= 0):
-                    currentNode = fatherNode
-                    op = currentNode.opContras(currentNode.__operator)
-                    fatherNode = fatherNode.__father
+        while (currentNode.getOperator() != "first father"):
+            if (father.getOperator() == operador):
+                if (fatherNode.getStar() > 0 and self.getStar() <= 0 or fatherNode.getFlower() > 0 and self.getFlower() <= 0):
+                    currentNode = currentNode.getFather()
+                    fatherNode = fatherNode.getFather()
                 else:
                     return False
+            else:
+                currentNode = currentNode.getFather()
+                fatherNode = fatherNode.getFather()
         return True
-
-    def opContras(self, op):
-        if (op == "right"):
-            return "left"
-        if (op == "left"):
-            return "right"
-        if (op == "up"):
-            return "down"
-        if (op == "down"):
-            return "up"
 
     def moveRight(self, posMario):
         i = posMario[0]

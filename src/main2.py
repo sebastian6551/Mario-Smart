@@ -18,7 +18,7 @@ class Main:
         screen = self.screen
         game = self.game
 
-        board = Main.importBoard(fileName, height)
+        board = Main.importBoard(fileName)
 
         while True:
             game.showBoard(screen, board)
@@ -32,13 +32,13 @@ class Main:
 
     # Function that imports the board from a txt file.
     @staticmethod
-    def importBoard(fileName, height):
+    def importBoard(fileName):
 
         with open(fileName, 'r') as f:
             content = f.read().split('\n')
 
         lines = []
-        for i in range(height):
+        for i in range(len(content)):
             lines.append(list(map(lambda x: int(x), content[i].split(" "))))
 
         board = np.array(lines)

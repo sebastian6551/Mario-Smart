@@ -50,6 +50,8 @@ while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
         son.moveUp(marioPos)
         stack.insert(0, son)
     currentNode = stack[0]
+    print(len(stack))
+    print(stack[0].getState())
     marioPos = currentNode.searchForMario()
 
 # print(currentNode.getFather().getDepth())

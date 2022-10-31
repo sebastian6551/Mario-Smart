@@ -75,6 +75,16 @@ class Node:
     def setAwaitingCharacter(self, awaitingCharacter):
         self.__awaitingCharacter = awaitingCharacter
 
+    def compareState(self, father, operador):  # True: The state changed
+        if (father.__operator == operador):
+            if (father.__star > 0 and self.__star <= 0):
+                return True
+            elif (father.__flower > 0 and self.__flower <= 0):
+                return True
+            else:
+                return False
+        return True
+
     def moveRight(self, posMario):
         i = posMario[0]
         j = posMario[1]

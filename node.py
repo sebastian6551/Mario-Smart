@@ -77,7 +77,7 @@ class Node:
 
     def compareState(self, father, operador):  # True: The state changed
         if (father.getOperator() == operador):
-            if (fatherNode.getStar() > 0 and self.getStar() <= 0 or fatherNode.getFlower() > 0 and self.getFlower() <= 0):
+            if (father.getStar() > 0 and self.getStar() <= 0 or father.getFlower() > 0 and self.getFlower() <= 0):
                 return True
             else:
                 return False
@@ -88,7 +88,7 @@ class Node:
         fatherNode = father
         while (currentNode.getOperator() != "first father"):
             if (father.getOperator() == operador):
-                if (fatherNode.getStar() > 0 and self.getStar() <= 0 or fatherNode.getFlower() > 0 and self.getFlower() <= 0):
+                if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
                     currentNode = currentNode.getFather()
                     fatherNode = fatherNode.getFather()
                 else:

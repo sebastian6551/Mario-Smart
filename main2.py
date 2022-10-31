@@ -19,7 +19,7 @@ currentNode = stack[0]
 while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
     stack.pop(0)
     # Check if right side is free
-    if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.compareStateCicle(currentNode.getFather(), "left")):
+    if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.compareState(currentNode.getFather(), "left")):
         # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
         son = Node(currentNode.getState(), currentNode,
                    "right", currentNode.getDepth() + 1, currentNode.getCost() + 1, currentNode.getStar(), currentNode.getFlower())
@@ -27,7 +27,7 @@ while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
         stack.insert(0, son)
 
     # Check if left side is free
-    if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.compareStateCicle(currentNode.getFather(), "right")):
+    if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.compareState(currentNode.getFather(), "right")):
         # if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
         son = Node(currentNode.getState(), currentNode,
                    "left", currentNode.getDepth() + 1, currentNode.getCost() + 1, currentNode.getStar(), currentNode.getFlower())
@@ -35,7 +35,7 @@ while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
         stack.insert(0, son)
 
     # Check if down side is free
-    if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.compareStateCicle(currentNode.getFather(), "up")):
+    if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.compareState(currentNode.getFather(), "up")):
         # if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
         son = Node(currentNode.getState(), currentNode,
                    "down", currentNode.getDepth() + 1, currentNode.getCost() + 1, currentNode.getStar(), currentNode.getFlower())
@@ -43,7 +43,7 @@ while (not (stack[0].isGoal(marioPos[0], marioPos[1]))):
         stack.insert(0, son)
 
     # Check if up side is free
-    if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.compareStateCicle(currentNode.getFather(), "down")):
+    if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.compareState(currentNode.getFather(), "down")):
         # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
         son = Node(currentNode.getState(), currentNode,
                    "up", currentNode.getDepth() + 1, currentNode.getCost() + 1, currentNode.getStar(), currentNode.getFlower())

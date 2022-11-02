@@ -79,7 +79,7 @@ class Node:
         fatherNode = father
         if (father.getOperator() != "first father"):
             if (operador == "right"):
-                if (marioPos[1]+1 == fatherNode.searchForMario()[1] and marioPos[0] == fatherNode.searchForMario()[0]):
+                if (marioPos[1]+1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
                     if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
                         return True
                     else:
@@ -87,7 +87,7 @@ class Node:
                 else:
                     return True
             if (operador == "left"):
-                if (marioPos[1]-1 == fatherNode.searchForMario()[1] and marioPos[0] == fatherNode.searchForMario()[0]):
+                if (marioPos[1]-1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
                     if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
                         return True
                     else:
@@ -95,7 +95,7 @@ class Node:
                 else:
                     return True
             if (operador == "down"):
-                if (marioPos[0]+1 == fatherNode.searchForMario()[0] and marioPos[1] == fatherNode.searchForMario()[1]):
+                if (marioPos[0]+1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
                     if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
                         return True
                     else:
@@ -103,7 +103,7 @@ class Node:
                 else:
                     return True
             if (operador == "up"):
-                if (marioPos[0]-1 == fatherNode.searchForMario()[0] and marioPos[1] == fatherNode.searchForMario()[1]):
+                if (marioPos[0]-1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
                     if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
                         return True
                     else:
@@ -288,16 +288,16 @@ class Node:
         return marioPos
 
     def isGoal(self, i, j):
-        if (j+1 < 9):
+        if (j+1 <= 9):
             if (self.__state[i, j+1] == 6):
                 return True
-        if (i-1 > 0):
+        if (i-1 >= 0):
             if (self.__state[i-1, j] == 6):
                 return True
-        if (i+1 < 9):
+        if (i+1 <= 9):
             if (self.__state[i+1, j] == 6):
                 return True
-        if (j-1 > 0):
+        if (j-1 >= 0):
             if (self.__state[i, j-1] == 6):
                 return True
             # if(self.state[i,j+1]==6 or self.state[i-1,j]==6 or self.state[i+1,j]==6 or self.state[i,j-1]==6):

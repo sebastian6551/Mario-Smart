@@ -78,7 +78,7 @@ solutionWorld = solution[::-1]
 
 
 BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
+WHITE = (255, 255, 255)  # FREE 0
 BROWN = (139, 69, 19)  # BLOCK 1
 
 # Set the length and width of each grid cell.

@@ -6,6 +6,8 @@ class Node:
     STAR = 3
     KOOPA = 5
     FLOWER = 4
+    PRINCESS = 6
+    RESCUED_PRINCESS = 8
 
     def __init__(self, state, father, operator, depth, cost, star, flower):
         self.__state = state
@@ -200,7 +202,6 @@ class Node:
         self.__state[i, j] = self.getFather().getAwaitingCharacter()
         # print("[ " + str(i) + " ] [ " + str(j + 1) + " ]") if i == 6 else 0
         self.takeDecision([i, j+1])
-        self.__state[i, j+1] = self.MARIO
         return self
 
     def moveLeft(self, posMario):
@@ -208,7 +209,6 @@ class Node:
         j = posMario[1]
         self.__state[i, j] = self.getFather().getAwaitingCharacter()
         self.takeDecision([i, j-1])
-        self.__state[i, j-1] = self.MARIO
         return self
 
     def moveDown(self, posMario):
@@ -216,7 +216,6 @@ class Node:
         j = posMario[1]
         self.__state[i, j] = self.getFather().getAwaitingCharacter()
         self.takeDecision([i+1, j])
-        self.__state[i+1, j] = self.MARIO
         return self
 
     def moveUp(self, posMario):
@@ -224,14 +223,17 @@ class Node:
         j = posMario[1]
         self.__state[i, j] = self.getFather().getAwaitingCharacter()
         self.takeDecision([i-1, j])
-        self.__state[i-1, j] = self.MARIO
         return self
 
     # pos is the future position of Mario
     def takeDecision(self, pos):
         i = pos[0]
         j = pos[1]
-        if self.__state[i, j] == self.KOOPA:
+
+        if self.__state[i, j] == self.PRINCESS:
+            self.getFather().setAwaitingCharacter(self.MARIO)
+            self.__state[i, j] = self.RESCUED_PRINCESS
+        elif self.__state[i, j] == self.KOOPA:
             if self.getFlower() > 0 or self.getStar() > 0:
                 self.getFather().setAwaitingCharacter(self.EMPTY)
                 self.setFlower(self.getFlower() -
@@ -252,6 +254,9 @@ class Node:
         else:
             self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
             self.setAwaitingCharacter(self.EMPTY)
+
+        if self.__state[i, j] != self.RESCUED_PRINCESS:
+            self.__state[i, j] = self.MARIO
 
     def showDepth(self):
         print("The node's depth is: " + str(self.__depth))
@@ -278,29 +283,19 @@ class Node:
 
     def searchForMario(self):
         marioPos = []  # Mario position [x,y]
-        arr3 = self.__state
+        state = self.__state
         for i in range(10):
             for j in range(10):
-                if (arr3[i, j] == 2):
+                if (state[i, j] == self.MARIO):
                     marioPos.append(i)
                     marioPos.append(j)
         self.setMarioPos(marioPos)
         return marioPos
 
-    def isGoal(self, i, j):
-        if (j+1 <= 9):
-            if (self.__state[i, j+1] == 6):
-                return True
-        if (i-1 >= 0):
-            if (self.__state[i-1, j] == 6):
-                return True
-        if (i+1 <= 9):
-            if (self.__state[i+1, j] == 6):
-                return True
-        if (j-1 >= 0):
-            if (self.__state[i, j-1] == 6):
-                return True
-            # if(self.state[i,j+1]==6 or self.state[i-1,j]==6 or self.state[i+1,j]==6 or self.state[i,j-1]==6):
-            #    return True
-        else:
-            return False
+    def isGoal(self):
+        state = self.__state
+        for i in range(10):
+            for j in range(10):
+                if (state[i, j] == self.RESCUED_PRINCESS):
+                    return True
+        return False

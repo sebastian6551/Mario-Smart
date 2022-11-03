@@ -10,13 +10,16 @@ world = np.matrix(board_txt)
 
 CHOSEN_ALGORITHM = 1
 algorithm = None
+title = ""
 
 if CHOSEN_ALGORITHM == 0:
     algorithm = AmplitudeAlgorithm(world)
+    tittle = "Mario smart amplitud"
 elif CHOSEN_ALGORITHM == 1:
     algorithm = DepthAlgorithm(world)
+    tittle = "Mario smart profundidad"
 
 solutionWorld = algorithm.start()
 interface = Interface(solutionWorld)
 
-interface.showInterface()
+interface.showInterface(tittle)

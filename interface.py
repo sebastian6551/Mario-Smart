@@ -31,7 +31,7 @@ class Interface:
         self.__imgMarioAndPrincess = pygame.image.load(
             "images/mario&princess.jpg").convert()
 
-    def showInterface(self):
+    def showInterface(self, tittle):
         # Initialize pygame
         pygame.init()
 
@@ -40,7 +40,7 @@ class Interface:
         screen = pygame.display.set_mode(WINDOW_DIMENSION)
 
         # Set the title of the screen.
-        pygame.display.set_caption("Mario smart profundidad")
+        pygame.display.set_caption(tittle)
 
         # iterate until the user presses the exit button.
         press = False

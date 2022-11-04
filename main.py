@@ -8,7 +8,7 @@ with open('matriz.txt', 'r') as f:
 
 world = np.matrix(board_txt)
 
-CHOSEN_ALGORITHM = 1
+CHOSEN_ALGORITHM = 0
 algorithm = None
 title = ""
 

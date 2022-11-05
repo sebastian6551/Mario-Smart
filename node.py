@@ -225,13 +225,41 @@ class Node:
         self.takeDecision([i-1, j])
         return self
 
+    def setNewCost(self, pos):
+        i = pos[0]
+        j = pos[1]
+        state = self.getState()
+        currentCost = self.getCost()  # Current cost is the one from the father
+        # If the position where Mario will move into has a Koopa inside then:
+        if state[i, j] == self.KOOPA:
+            print("Entro a IF de setNewCost")
+            if self.getStar() > 0:  # If true, Koopa will not affect Mario
+                self.setCost(currentCost + 0.5)
+            elif self.getFlower() > 0:  # If true, Mario can use the flower to kill Koopa
+                self.setCost(currentCost + 1)
+            else:  # If all of the cases above did not meet, Mario is affected by Koopa
+                self.setCost(currentCost + 6)
+        elif state[i, j] == self.FLOWER:
+            if self.getStar() > 0:
+                self.setCost(currentCost + 0.5)
+            else:
+                self.setCost(currentCost + 1)
+        # If it is not a Koopa, I still need to check whether Mario has a star or not,
+        # if so Mario needs 0.5 of effort to move across the grid
+        else:
+            if self.getStar() > 0:
+                self.setCost(currentCost + 0.5)
+            else:
+                self.setCost(currentCost + 1)
+
     # pos is the future position of Mario
     def takeDecision(self, pos):
         i = pos[0]
         j = pos[1]
-
+        self.setNewCost(pos)
         if self.__state[i, j] == self.PRINCESS:
             self.getFather().setAwaitingCharacter(self.MARIO)
+            self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
             self.__state[i, j] = self.RESCUED_PRINCESS
         elif self.__state[i, j] == self.KOOPA:
             if self.getFlower() > 0 or self.getStar() > 0:
@@ -245,6 +273,7 @@ class Node:
             if self.getStar() == 0:  # Mario can get the flower
                 self.setFlower(self.getFlower() + 1)
             else:
+                self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
                 self.setAwaitingCharacter(self.FLOWER)
         elif self.__state[i, j] == self.STAR:
             if self.getFlower() == 0:  # Mario can get the star
@@ -268,8 +297,8 @@ class Node:
         directions = []
         currentNode = self
         while currentNode.getOperator() != "first father":
-            directions.append(str(currentNode.getOperator(
-            )) + " " + str(currentNode.getFlower()) + " " + str(currentNode.getStar()))
+            directions.append(
+                str(currentNode.getOperator() + " " + str(currentNode.getCost()) + " Star: " + str(currentNode.getStar())))
             currentNode = currentNode.getFather()
         return directions
 

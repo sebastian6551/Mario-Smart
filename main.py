@@ -1,6 +1,7 @@
 import numpy as np
 from algorithms.depthAlgorithm import DepthAlgorithm
 from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
+from algorithms.costAlgorithm import CostAlgorithm
 from interface import Interface
 
 with open('matriz.txt', 'r') as f:
@@ -8,7 +9,7 @@ with open('matriz.txt', 'r') as f:
 
 world = np.matrix(board_txt)
 
-CHOSEN_ALGORITHM = 1
+CHOSEN_ALGORITHM = 2
 algorithm = None
 title = ""
 
@@ -18,6 +19,9 @@ if CHOSEN_ALGORITHM == 0:
 elif CHOSEN_ALGORITHM == 1:
     algorithm = DepthAlgorithm(world)
     tittle = "Mario smart profundidad"
+elif CHOSEN_ALGORITHM == 2:
+    algorithm = CostAlgorithm(world)
+    tittle = "Mario smart costo"
 
 solutionWorld = algorithm.start()
 interface = Interface(solutionWorld)

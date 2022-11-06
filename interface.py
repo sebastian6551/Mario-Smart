@@ -46,6 +46,11 @@ class Interface:
         rectangulo.center = (x, y)
         pantalla.blit(superficie, rectangulo)
 
+    def showComputingTime(self, screen, algorithm):
+        computingTime = algorithm.getComputingTime()
+        self.showText(screen, pygame.font.match_font(
+            'arial'), computingTime, WHITE, 35, 655, 230)
+
     def interfaceSolution(self, press, grid, i, screen, clock):
         while not press:
             # prueba para boton
@@ -189,6 +194,9 @@ class Interface:
         self.showText(screen, pygame.font.match_font(
             'arial'), "A*", WHITE, 35, 655, 140)
 
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Tiempo de cómputo: ", WHITE, 35, 655, 200)
+
         for row in range(10):
             for column in range(10):
                 if (grid[row, column] != 1 and grid[row, column] != 2 and grid[row, column] != 5 and grid[row, column] != 3 and grid[row, column] != 4 and grid[row, column] != 6):
@@ -275,6 +283,7 @@ class Interface:
                         pygame.display.set_caption("Mario smart amplitud")
                         algorithm = AmplitudeAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
+                        self.showComputingTime(screen, algorithm)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 581 and pos[0] < 732 and pos[1] > 42 and pos[1] < 62:
@@ -283,6 +292,7 @@ class Interface:
                         pygame.display.set_caption("Mario smart profundidad")
                         algorithm = DepthAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
+                        self.showComputingTime(screen, algorithm)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 618 and pos[0] < 692 and pos[1] > 70 and pos[1] < 90:
@@ -291,6 +301,7 @@ class Interface:
                         pygame.display.set_caption("Mario smart costo")
                         algorithm = CostAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
+                        self.showComputingTime(screen, algorithm)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:

@@ -1,5 +1,5 @@
 from node import Node
-
+from time import process_time
 
 class DepthAlgorithm:
 
@@ -9,8 +9,17 @@ class DepthAlgorithm:
         #marioPos0 = firstNode.searchForMario()
         self.marioPos = self.firstNode.searchForMario()
         self.stack = [self.firstNode]
+        self.computingTime = ""
+
+    def getComputingTime(self):
+        return self.computingTime
+
+    def setComputingTime(self, computingTime):
+        self.computingTime = computingTime
 
     def start(self):
+        startTime = process_time()
+
         stack = self.stack
         marioPos = self.marioPos
         #marioPos0 = self.marioPos0
@@ -75,6 +84,10 @@ class DepthAlgorithm:
         # print(currentNode.getFather().getDepth())
         # print(currentNode.getState())
         # print(currentNode.recreateSolution())
+        elapsedTime = process_time() - startTime
+        elapsedTimeFormatted = "%.10f s." % elapsedTime
+        self.setComputingTime(elapsedTimeFormatted)
+        
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good

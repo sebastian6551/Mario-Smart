@@ -1,4 +1,6 @@
 import pygame
+from algorithms.depthAlgorithm import DepthAlgorithm
+from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)  # FREE 0
@@ -8,18 +10,23 @@ LENGTHCELL = 45
 HIGHCELL = 45
 # Set the margin between the cells.
 MARGIN = 5
+algorithm = None
 
 
 class Interface:
 
-    def __init__(self, solutionWorlds):
-        self.__solutionWorlds = solutionWorlds
+    def __init__(self, initWorld):
+        self.__initWorld = initWorld
+        self.__solutionWorlds = None
         self.__imgMario = None
         self.__imgKoopa = None
         self.__imgPrincess = None
         self.__imgStar = None
         self.__imgFlower = None
         self.__imgMarioAndPrincess = None
+
+    def setSolutionWorld(self, newSolutionWorlds):
+        self.__solutionWorlds = newSolutionWorlds
 
     def loadImages(self):
         self.__imgMario = pygame.image.load("images/mario.jpg").convert()
@@ -31,14 +38,14 @@ class Interface:
         self.__imgMarioAndPrincess = pygame.image.load(
             "images/mario&princess.jpg").convert()
 
-    def muestra_texto(self, pantalla, fuente, texto, color, dimensiones, x, y):
+    def showText(self, pantalla, fuente, texto, color, dimensiones, x, y):
         tipo_letra = pygame.font.Font(fuente, dimensiones)
         superficie = tipo_letra.render(texto, True, color)
         rectangulo = superficie.get_rect()
         rectangulo.center = (x, y)
         pantalla.blit(superficie, rectangulo)
 
-    def interfaceInit(self, press, grid, i, screen, clock):
+    def interfaceSolution(self, press, grid, i, screen, clock):
         while not press:
             # prueba para boton
             pos = pygame.mouse.get_pos()
@@ -135,16 +142,13 @@ class Interface:
         # Close
         # pygame.quit()
 
-    def showInterface(self, tittle):
+    def showInterface(self):
         # Initialize pygame
         pygame.init()
 
         # Set the length and width of the screen
         WINDOW_DIMENSION = [800, 510]  # 510,510
         screen = pygame.display.set_mode(WINDOW_DIMENSION)
-
-        # Set the title of the screen.
-        pygame.display.set_caption(tittle)
 
         # iterate until the user presses the exit button.
         press = False
@@ -154,13 +158,28 @@ class Interface:
 
         i = 1
         self.loadImages()
-        grid = self.__solutionWorlds[0]
+        #grid = self.__solutionWorlds[0]
+        grid = self.__initWorld
 
         # Set the screen background.
         screen.fill(BLACK)
 
-        self.muestra_texto(screen, pygame.font.match_font(
+        pygame.display.set_caption("Mario smart")
+
+        self.showText(screen, pygame.font.match_font(
             'arial'), "Amplitud", WHITE, 35, 655, 20)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Profundidad", WHITE, 35, 655, 50)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Costo", WHITE, 35, 655, 80)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Avara", WHITE, 35, 655, 110)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "A*", WHITE, 35, 655, 140)
 
         for row in range(10):
             for column in range(10):
@@ -189,14 +208,6 @@ class Interface:
                                                         row + MARGIN,
                                                         LENGTHCELL,
                                                         HIGHCELL])
-                    """
-                        color = ROJO
-                        pygame.draw.rect(screen,
-                                        color,
-                                        [(MARGIN+LENGTHCELL) * column + MARGIN,
-                                        (MARGIN+HIGHCELL) * row + MARGIN,
-                                            LENGTHCELL,
-                                            HIGHCELL])"""
                 if grid[row, column] == 5:
 
                     imagen_redimensionada = pygame.transform.scale(
@@ -206,14 +217,6 @@ class Interface:
                                                         row + MARGIN,
                                                         LENGTHCELL,
                                                         HIGHCELL])
-                    """
-                        color = VERDE
-                        pygame.draw.rect(screen,
-                                        color,
-                                        [(MARGIN+LENGTHCELL) * column + MARGIN,
-                                        (MARGIN+HIGHCELL) * row + MARGIN,
-                                        LENGTHCELL,
-                                        HIGHCELL])"""
                 if grid[row, column] == 3:
 
                     imagen_redimensionada = pygame.transform.scale(
@@ -223,14 +226,6 @@ class Interface:
                                                         row + MARGIN,
                                                         LENGTHCELL,
                                                         HIGHCELL])
-                    """
-                        color = salom
-                        pygame.draw.rect(screen,
-                                        color,
-                                        [(MARGIN+LENGTHCELL) * column + MARGIN,
-                                        (MARGIN+HIGHCELL) * row + MARGIN,
-                                        LENGTHCELL,
-                                        HIGHCELL])"""
                 if grid[row, column] == 4:
 
                     imagen_redimensionada = pygame.transform.scale(
@@ -240,14 +235,6 @@ class Interface:
                                                         row + MARGIN,
                                                         LENGTHCELL,
                                                         HIGHCELL])
-                    """
-                        color = PINK
-                        pygame.draw.rect(screen,
-                                        color,
-                                        [(MARGIN+LENGTHCELL) * column + MARGIN,
-                                        (MARGIN+HIGHCELL) * row + MARGIN,
-                                        LENGTHCELL,
-                                        HIGHCELL])"""
                 if grid[row, column] == 6:
 
                     imagen_redimensionada = pygame.transform.scale(
@@ -266,7 +253,7 @@ class Interface:
                                                         LENGTHCELL,
                                                         HIGHCELL])
         pygame.display.flip()
-        # -------- Main Program Loop-----------
+        # --------Main Program Loop-----------
         while not press:
             # prueba para boton
             pos = pygame.mouse.get_pos()
@@ -276,4 +263,43 @@ class Interface:
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if pos[0] > 598 and pos[0] < 713 and pos[1] > 8 and pos[1] < 29:
                         print("Amplitud")
-                        self.interfaceInit(press, grid, i, screen, clock)
+                        # Set the title of the screen.
+                        pygame.display.set_caption("Mario smart amplitud")
+                        algorithm = AmplitudeAlgorithm(self.__initWorld)
+                        solutionWorld = algorithm.start()
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)
+                    elif pos[0] > 581 and pos[0] < 732 and pos[1] > 42 and pos[1] < 62:
+                        print("Profundidad")
+                        # Set the title of the screen.
+                        pygame.display.set_caption("Mario smart profundidad")
+                        algorithm = DepthAlgorithm(self.__initWorld)
+                        solutionWorld = algorithm.start()
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)
+                    elif pos[0] > 618 and pos[0] < 692 and pos[1] > 70 and pos[1] < 90:
+                        print("Costo")
+                        # Set the title of the screen.
+                        """pygame.display.set_caption("Mario smart costo")
+                        algorithm = DepthAlgorithm(self.__initWorld)
+                        solutionWorld = algorithm.start()
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                    elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:
+                        print("Avara")
+                        # Set the title of the screen.
+                        """pygame.display.set_caption("Mario smart avara")
+                        algorithm = DepthAlgorithm(self.__initWorld)
+                        solutionWorld = algorithm.start()
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                    elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:
+                        print("A*")
+                        # Set the title of the screen.
+                        """pygame.display.set_caption("Mario smart A*")
+                        algorithm = DepthAlgorithm(self.__initWorld)
+                        solutionWorld = algorithm.start()
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                    # print(pos[0])
+                    # print(pos[1])

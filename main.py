@@ -8,7 +8,8 @@ with open('matriz.txt', 'r') as f:
 
 world = np.matrix(board_txt)
 
-CHOSEN_ALGORITHM = 0
+"""
+CHOSEN_ALGORITHM = 6
 algorithm = None
 title = ""
 
@@ -21,5 +22,7 @@ elif CHOSEN_ALGORITHM == 1:
 
 solutionWorld = algorithm.start()
 interface = Interface(solutionWorld)
+interface.showInterface(tittle)"""
 
-interface.showInterface(tittle)
+interface = Interface(world)
+interface.showInterface()

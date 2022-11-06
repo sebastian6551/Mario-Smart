@@ -1,6 +1,7 @@
 import pygame
 from algorithms.depthAlgorithm import DepthAlgorithm
 from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
+from algorithms.costAlgorithm import CostAlgorithm
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)  # FREE 0
@@ -280,11 +281,11 @@ class Interface:
                     elif pos[0] > 618 and pos[0] < 692 and pos[1] > 70 and pos[1] < 90:
                         print("Costo")
                         # Set the title of the screen.
-                        """pygame.display.set_caption("Mario smart costo")
-                        algorithm = DepthAlgorithm(self.__initWorld)
+                        pygame.display.set_caption("Mario smart costo")
+                        algorithm = CostAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
                         self.setSolutionWorld(solutionWorld)
-                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                        self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:
                         print("Avara")
                         # Set the title of the screen.

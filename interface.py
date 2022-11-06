@@ -131,10 +131,14 @@ class Interface:
          # limit to 1 frames per second.
             clock.tick(1)
 
-         # update world
-            grid = self.__solutionWorlds[i]
         # check that the length is not exceeded
-            if (not (i+1 >= len(self.__solutionWorlds))):
+            if (not (i >= len(self.__solutionWorlds))):
+                # update world
+                grid = self.__solutionWorlds[i]
+                i += 1
+            elif (i == len(self.__solutionWorlds)):
+                sonido_fondo = pygame.mixer.Sound("music/fondo.wav")
+                pygame.mixer.Sound.play(sonido_fondo)
                 i += 1
 
         # advance and update the screen with what we have drawn.
@@ -146,6 +150,9 @@ class Interface:
     def showInterface(self):
         # Initialize pygame
         pygame.init()
+
+        # music
+        pygame.mixer.init()
 
         # Set the length and width of the screen
         WINDOW_DIMENSION = [800, 510]  # 510,510

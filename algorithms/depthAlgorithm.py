@@ -16,10 +16,13 @@ class DepthAlgorithm:
         #marioPos0 = self.marioPos0
 
         currentNode = stack[0]
+        expandedNodes = 0
         while not (stack[0].isGoal()):
             print("---")
             print(stack[0].getMarioPos())
+
             stack.pop(0)
+            expandedNodes += 1
             # Check if right side is free
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
                 if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "right")):
@@ -74,4 +77,6 @@ class DepthAlgorithm:
         # print(currentNode.recreateSolution())
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
+        print(expandedNodes+1)  # Good
+        print(stack[0].recreateSolution())
         return solutionWorld

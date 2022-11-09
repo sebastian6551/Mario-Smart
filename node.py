@@ -18,6 +18,7 @@ class Node:
         self.__star = star  # It lasts 6 grids - cost 1/2 and they accumulate
         self.__flower = flower  # Cost to go through a koopa when having a flower comes down to 1
         self.__marioPos = []
+        self.__heuristic = 0 # The correct value is given only when the greedy algorithm is used
         self.__awaitingCharacter = 0
 
     def getState(self):
@@ -34,6 +35,9 @@ class Node:
 
     def getCost(self):
         return self.__cost
+
+    def getHeuristic(self):
+        return self.__heuristic
 
     def getMarioPos(self):
         return self.__marioPos
@@ -65,6 +69,9 @@ class Node:
     def setCost(self, newCost):
         self.__cost = newCost
 
+    def setHeuristic(self, newHeuristic):
+        self.__heuristic = newHeuristic
+
     def setMarioPos(self, newMarioPos):
         self.__marioPos = newMarioPos
 
@@ -76,6 +83,20 @@ class Node:
 
     def setAwaitingCharacter(self, awaitingCharacter):
         self.__awaitingCharacter = awaitingCharacter
+
+    def calculateManhattanDistance(self, princessPos):
+        iDistance = princessPos[0] - self.getMarioPos[0]
+        jDistance = princessPos[1] - self.getMarioPos[1]
+        manhattanDistance = abs(iDistance) + abs(jDistance)
+        return manhattanDistance
+
+    def calculateHeuristic(self, manhattanDistance):
+        heuristic = 0
+        if (manhattanDistance > 12): # assuming Mario has both stars, only a max. of 12 squares would cost half as much.
+            heuristic = manhattanDistance - 6
+        else:
+            heuristic = manhattanDistance / 2
+        return heuristic
 
     def compareState(self, father, marioPos, operator):  # True: The state changed
         fatherNode = father

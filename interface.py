@@ -2,8 +2,10 @@ import pygame
 from algorithms.depthAlgorithm import DepthAlgorithm
 from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
 from algorithms.costAlgorithm import CostAlgorithm
+from algorithms.greedyAlgorithm import GreedyAlgorithm
 
 BLACK = (0, 0, 0)
+YELLOW = (255, 205, 104)
 WHITE = (255, 255, 255)  # FREE 0
 BROWN = (139, 69, 19)  # BLOCK 1
 # Set the length and width of each grid cell.
@@ -281,6 +283,8 @@ class Interface:
                         print("Amplitud")
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart amplitud")
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), "Amplitud", YELLOW, 35, 655, 20)
                         algorithm = AmplitudeAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
                         self.showComputingTime(screen, algorithm)
@@ -290,6 +294,8 @@ class Interface:
                         print("Profundidad")
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart profundidad")
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), "Profundidad", YELLOW, 35, 655, 50)
                         algorithm = DepthAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
                         self.showComputingTime(screen, algorithm)
@@ -299,6 +305,8 @@ class Interface:
                         print("Costo")
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart costo")
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), "Costo", YELLOW, 35, 655, 80)
                         algorithm = CostAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
                         self.showComputingTime(screen, algorithm)
@@ -307,15 +315,20 @@ class Interface:
                     elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:
                         print("Avara")
                         # Set the title of the screen.
-                        """pygame.display.set_caption("Mario smart avara")
-                        algorithm = DepthAlgorithm(self.__initWorld)
-                        solutionWorld = algorithm.start()
-                        self.setSolutionWorld(solutionWorld)
-                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                        pygame.display.set_caption("Mario smart avara")
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), "Avara", YELLOW, 35, 655, 110)
+                        algorithm = GreedyAlgorithm(self.__initWorld)
+                        #solutionWorld = algorithm.start()
+                        self.showComputingTime(screen, algorithm)
+                        # self.setSolutionWorld(solutionWorld)
+                        # self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:
                         print("A*")
                         # Set the title of the screen.
-                        """pygame.display.set_caption("Mario smart A*")
+                        """pygame.display.set_caption("Mario smart A*")               
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), "A*", YELLOW, 35, 655, 140)
                         algorithm = DepthAlgorithm(self.__initWorld)
                         solutionWorld = algorithm.start()
                         self.setSolutionWorld(solutionWorld)

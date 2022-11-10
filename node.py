@@ -275,7 +275,7 @@ class Node:
         i = pos[0]
         j = pos[1]
         #print("Pos: " + str(i) + " and " + str(j))
-        self.setNewCost(pos)
+        # self.setNewCost(pos)
         if self.__state[i, j] == self.PRINCESS:
             self.setAwaitingCharacter(self.EMPTY)
             self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)

@@ -319,10 +319,10 @@ class Interface:
                         self.showText(screen, pygame.font.match_font(
                             'arial'), "Avara", YELLOW, 35, 655, 110)
                         algorithm = GreedyAlgorithm(self.__initWorld)
-                        #solutionWorld = algorithm.start()
+                        solutionWorld = algorithm.start()
                         self.showComputingTime(screen, algorithm)
-                        # self.setSolutionWorld(solutionWorld)
-                        # self.interfaceSolution(press, grid, i, screen, clock)
+                        self.setSolutionWorld(solutionWorld)
+                        self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:
                         print("A*")
                         # Set the title of the screen.

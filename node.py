@@ -85,8 +85,8 @@ class Node:
         self.__awaitingCharacter = awaitingCharacter
 
     def calculateManhattanDistance(self, princessPos):
-        iDistance = princessPos[0] - self.getMarioPos[0]
-        jDistance = princessPos[1] - self.getMarioPos[1]
+        iDistance = princessPos[0] - self.getMarioPos()[0]
+        jDistance = princessPos[1] - self.getMarioPos()[1]
         manhattanDistance = abs(iDistance) + abs(jDistance)
         return manhattanDistance
 

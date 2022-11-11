@@ -1,6 +1,7 @@
 from node import Node
 from time import process_time
 
+
 class CostAlgorithm:
     def __init__(self, world):
         self.emptyNode = Node(None, None, "first father", -1, 0, 0, 0)
@@ -85,7 +86,7 @@ class CostAlgorithm:
         # print(currentNode.getFather().getDepth())
         # print(currentNode.getState())
         # print(currentNode.recreateSolution())
-        
+
         elapsedTime = process_time() - startTime
         elapsedTimeFormatted = "%.10f s." % elapsedTime
         self.setComputingTime(elapsedTimeFormatted)
@@ -95,4 +96,4 @@ class CostAlgorithm:
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

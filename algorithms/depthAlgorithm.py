@@ -1,6 +1,7 @@
 from node import Node
 from time import process_time
 
+
 class DepthAlgorithm:
 
     def __init__(self, world):
@@ -87,9 +88,9 @@ class DepthAlgorithm:
         elapsedTime = process_time() - startTime
         elapsedTimeFormatted = "%.10f s." % elapsedTime
         self.setComputingTime(elapsedTimeFormatted)
-        
+
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
         print(stack[0].recreateSolution())
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

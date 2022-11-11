@@ -27,6 +27,7 @@ class DepthAlgorithm:
 
         currentNode = stack[0]
         expandedNodes = 0
+        depth = 0
         while not (stack[0].isGoal()):
             print("---")
             print(stack[0].getMarioPos())
@@ -42,6 +43,8 @@ class DepthAlgorithm:
                     son.moveRight(marioPos)
                     stack.insert(0, son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if left side is free
@@ -54,6 +57,8 @@ class DepthAlgorithm:
                     son.moveLeft(marioPos)
                     stack.insert(0, son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if down side is free
@@ -66,6 +71,8 @@ class DepthAlgorithm:
                     son.moveDown(marioPos)
                     stack.insert(0, son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if up side is free
@@ -78,6 +85,8 @@ class DepthAlgorithm:
                     son.moveUp(marioPos)
                     stack.insert(0, son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
             currentNode = stack[0]
             marioPos = currentNode.searchForMario()
@@ -91,6 +100,7 @@ class DepthAlgorithm:
 
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
-        print(expandedNodes+1)  # Good
+        print("expandido", expandedNodes+1)  # Good
+        print("profundidad", depth)
         print(stack[0].recreateSolution())
         return [solutionWorld, expandedNodes+1]

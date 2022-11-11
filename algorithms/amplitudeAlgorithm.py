@@ -24,6 +24,7 @@ class AmplitudeAlgorithm:
         marioPos0 = self.marioPos
         currentNode = stack[0]
         expandedNodes = 0
+        depth = 0
         while not (stack[0].isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
@@ -37,6 +38,8 @@ class AmplitudeAlgorithm:
                     son.moveRight(marioPos)
                     stack.append(son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if left side is free
@@ -48,6 +51,8 @@ class AmplitudeAlgorithm:
                     son.moveLeft(marioPos)
                     stack.append(son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if down side is free
@@ -59,6 +64,8 @@ class AmplitudeAlgorithm:
                     son.moveDown(marioPos)
                     stack.append(son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if up side is free
@@ -70,6 +77,8 @@ class AmplitudeAlgorithm:
                     son.moveUp(marioPos)
                     stack.append(son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos())
             stack.pop(0)
             expandedNodes += 1
@@ -85,6 +94,7 @@ class AmplitudeAlgorithm:
 
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
-        print(expandedNodes+1)  # Good
+        print("expandido", expandedNodes+1)  # Good
+        print("profundidad", depth)
         print(stack[0].recreateSolution())
         return [solutionWorld, expandedNodes+1]

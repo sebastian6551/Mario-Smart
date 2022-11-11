@@ -337,8 +337,12 @@ class Interface:
                         self.showText(screen, pygame.font.match_font(
                             'arial'), "Avara", YELLOW, 35, 655, 110)
                         algorithm = GreedyAlgorithm(self.__initWorld)
-                        solutionWorld = algorithm.start()
+                        solution = algorithm.start()
+                        solutionWorld = solution[0]
+                        nodeExpanded = solution[1]
                         self.showComputingTime(screen, algorithm)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:

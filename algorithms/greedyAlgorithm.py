@@ -119,4 +119,4 @@ class GreedyAlgorithm:
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

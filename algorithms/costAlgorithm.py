@@ -37,6 +37,7 @@ class CostAlgorithm:
                 if (currentNode.avoidGoBack("right")):
                     son = Node(currentNode.getState(), currentNode,
                                "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.rightMovement(marioPos))
                     son.moveRight(marioPos)
                     stack.append(son)
                     print("El costo actual es: " + str(son.getCost()))
@@ -49,6 +50,7 @@ class CostAlgorithm:
                 if (currentNode.avoidGoBack("left")):
                     son = Node(currentNode.getState(), currentNode,
                                "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.leftMovement(marioPos))
                     son.moveLeft(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -60,6 +62,7 @@ class CostAlgorithm:
                 if (currentNode.avoidGoBack("down")):
                     son = Node(currentNode.getState(), currentNode,
                                "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.downMovement(marioPos))
                     son.moveDown(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -71,6 +74,7 @@ class CostAlgorithm:
                 if (currentNode.avoidGoBack("up")):
                     son = Node(currentNode.getState(), currentNode,
                                "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.upMovement(marioPos))
                     son.moveUp(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -96,4 +100,4 @@ class CostAlgorithm:
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

@@ -93,4 +93,4 @@ class DepthAlgorithm:
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
         print(stack[0].recreateSolution())
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

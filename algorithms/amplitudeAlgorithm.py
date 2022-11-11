@@ -21,7 +21,7 @@ class AmplitudeAlgorithm:
 
         stack = self.stack
         marioPos = self.marioPos
-        #marioPos0 = self.marioPos0
+        marioPos0 = self.marioPos
         currentNode = stack[0]
         expandedNodes = 0
         while not (stack[0].isGoal()):
@@ -31,6 +31,7 @@ class AmplitudeAlgorithm:
             print(stack[0].getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
                 if (currentNode.avoidGoBack("right")):
+
                     son = Node(currentNode.getState(), currentNode,
                                "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                     son.moveRight(marioPos)
@@ -86,4 +87,4 @@ class AmplitudeAlgorithm:
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
         print(stack[0].recreateSolution())
-        return solutionWorld
+        return [solutionWorld, expandedNodes+1]

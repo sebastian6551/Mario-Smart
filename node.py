@@ -100,7 +100,7 @@ class Node:
 
     def compareState(self, father, marioPos, operator):  # True: The state changed
         fatherNode = father
-        if (father.getOperator() != "first father"):
+        if (fatherNode.getOperator() != "first father"):
             if (operator == "right"):
                 if (marioPos[1]+1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
                     if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
@@ -134,6 +134,43 @@ class Node:
                 else:
                     return True
         return True
+
+        """ def compareState(self, father, marioPos, operator):  # True: The state changed
+        fatherNode = father
+        if (self.getOperator() != "first father"):
+            if (operator == "right"):
+                if (marioPos[1]+1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
+                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
+                        return True
+                    else:
+                        return False
+                else:
+                    return True
+            if (operator == "left"):
+                if (marioPos[1]-1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
+                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
+                        return True
+                    else:
+                        return False
+                else:
+                    return True
+            if (operator == "down"):
+                if (marioPos[0]+1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
+                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
+                        return True
+                    else:
+                        return False
+                else:
+                    return True
+            if (operator == "up"):
+                if (marioPos[0]-1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
+                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
+                        return True
+                    else:
+                        return False
+                else:
+                    return True
+return True"""
 
     # True: The state changed
 
@@ -295,8 +332,8 @@ class Node:
     def takeDecision(self, pos):
         i = pos[0]
         j = pos[1]
-        #print("Pos: " + str(i) + " and " + str(j))
-        self.setNewCost(pos)
+        # print("Pos: " + str(i) + " and " + str(j))
+        # self.setNewCost(pos)
         if self.__state[i, j] == self.PRINCESS:
             self.setAwaitingCharacter(self.EMPTY)
             self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
@@ -329,8 +366,8 @@ class Node:
         if self.__state[i, j] != self.RESCUED_PRINCESS:
             self.__state[i, j] = self.MARIO
 
-        #print("DESPUÉS DE TAKE DECISION: " + str(i) + " " + str(j))
-        #print("Estado después de rake decision:")
+        # print("DESPUÉS DE TAKE DECISION: " + str(i) + " " + str(j))
+        # print("Estado después de rake decision:")
         # print(self.getState())
 
     def showDepth(self):
@@ -364,6 +401,7 @@ class Node:
                 if (state[i, j] == self.MARIO):
                     marioPos[0] = i
                     marioPos[1] = j
+
         self.setMarioPos(marioPos)
         # print("DESPUES DE SEARCH FOR MARIO: " +
         #      str(marioPos[0]) + " " + str(marioPos[1]))

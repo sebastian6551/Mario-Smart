@@ -34,9 +34,10 @@ class CostAlgorithm:
             print("---")
             print(currentNode.getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
-                if (currentNode.compareState(currentNode.getFather(), marioPos, "right")):
+                if (currentNode.avoidGoBack("right")):
                     son = Node(currentNode.getState(), currentNode,
                                "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.rightMovement(marioPos))
                     son.moveRight(marioPos)
                     stack.append(son)
                     print("El costo actual es: " + str(son.getCost()))
@@ -46,9 +47,10 @@ class CostAlgorithm:
             # Check if left side is free
             # if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.getFather().getOperator() != "right"):
             if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
-                if (currentNode.compareState(currentNode.getFather(), marioPos, "left")):
+                if (currentNode.avoidGoBack("left")):
                     son = Node(currentNode.getState(), currentNode,
                                "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.leftMovement(marioPos))
                     son.moveLeft(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -57,9 +59,10 @@ class CostAlgorithm:
             # Check if down side is free
             # if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "up"):
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
-                if (currentNode.compareState(currentNode.getFather(), marioPos, "down")):
+                if (currentNode.avoidGoBack("down")):
                     son = Node(currentNode.getState(), currentNode,
                                "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.downMovement(marioPos))
                     son.moveDown(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -68,9 +71,10 @@ class CostAlgorithm:
             # Check if up side is free
             # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "down"):
             if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
-                if (currentNode.compareState(currentNode.getFather(), marioPos, "up")):
+                if (currentNode.avoidGoBack("up")):
                     son = Node(currentNode.getState(), currentNode,
                                "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.upMovement(marioPos))
                     son.moveUp(marioPos)
                     stack.append(son)
                     son.searchForMario()

@@ -35,6 +35,7 @@ class AmplitudeAlgorithm:
 
                     son = Node(currentNode.getState(), currentNode,
                                "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.rightMovement(marioPos))
                     son.moveRight(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -48,6 +49,7 @@ class AmplitudeAlgorithm:
                 if (currentNode.avoidGoBack("left")):
                     son = Node(currentNode.getState(), currentNode,
                                "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.leftMovement(marioPos))
                     son.moveLeft(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -61,6 +63,7 @@ class AmplitudeAlgorithm:
                 if (currentNode.avoidGoBack("down")):
                     son = Node(currentNode.getState(), currentNode,
                                "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.downMovement(marioPos))
                     son.moveDown(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -74,6 +77,7 @@ class AmplitudeAlgorithm:
                 if (currentNode.avoidGoBack("up")):
                     son = Node(currentNode.getState(), currentNode,
                                "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                    son.setNewCost(son.upMovement(marioPos))
                     son.moveUp(marioPos)
                     stack.append(son)
                     son.searchForMario()
@@ -96,5 +100,6 @@ class AmplitudeAlgorithm:
         solutionWorld = solution[::-1]
         print("expandido", expandedNodes+1)  # Good
         print("profundidad", depth)
+        print("El costo final de la solución es: " + str(currentNode.getCost()))
         print(stack[0].recreateSolution())
         return [solutionWorld, expandedNodes+1, depth]

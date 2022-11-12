@@ -108,5 +108,6 @@ class CostAlgorithm:
         print(currentNode.recreateSolution())
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
-        print(expandedNodes+1)  # Good
+        print("expandido", expandedNodes+1)  # Good
+        print("profundidad", depth)
         return [solutionWorld, expandedNodes+1, depth]

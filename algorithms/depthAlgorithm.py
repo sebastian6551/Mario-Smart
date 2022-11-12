@@ -103,4 +103,4 @@ class DepthAlgorithm:
         print("expandido", expandedNodes+1)  # Good
         print("profundidad", depth)
         print(stack[0].recreateSolution())
-        return [solutionWorld, expandedNodes+1]
+        return [solutionWorld, expandedNodes+1, depth]

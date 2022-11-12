@@ -39,7 +39,7 @@ class GreedyAlgorithm:
 
         currentNode = stack[0]
         expandedNodes = 0
-
+        depth = 0
         while not (currentNode.isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
@@ -71,6 +71,8 @@ class GreedyAlgorithm:
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
                     stack.append(son)
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if down side is free
@@ -86,6 +88,8 @@ class GreedyAlgorithm:
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
                     stack.append(son)
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if up side is free
@@ -101,6 +105,8 @@ class GreedyAlgorithm:
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
                     stack.append(son)
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             stack.remove(currentNode)
@@ -119,4 +125,4 @@ class GreedyAlgorithm:
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
         print(expandedNodes+1)  # Good
-        return [solutionWorld, expandedNodes+1]
+        return [solutionWorld, expandedNodes+1, depth]

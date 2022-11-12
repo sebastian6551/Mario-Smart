@@ -295,9 +295,13 @@ class Interface:
                         solution = algorithm.start()
                         solutionWorld = solution[0]
                         nodeExpanded = solution[1]
+                        depth = solution[2]
                         self.showComputingTime(screen, algorithm)
                         self.showText(screen, pygame.font.match_font(
                             'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
+                        self.setSolutionWorld(solutionWorld)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(depth), WHITE, 35, 655, 355)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 581 and pos[0] < 732 and pos[1] > 42 and pos[1] < 62:
@@ -310,9 +314,12 @@ class Interface:
                         solution = algorithm.start()
                         solutionWorld = solution[0]
                         nodeExpanded = solution[1]
+                        depth = solution[2]
                         self.showComputingTime(screen, algorithm)
                         self.showText(screen, pygame.font.match_font(
                             'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(depth), WHITE, 35, 655, 355)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 618 and pos[0] < 692 and pos[1] > 70 and pos[1] < 90:
@@ -325,9 +332,12 @@ class Interface:
                         solution = algorithm.start()
                         solutionWorld = solution[0]
                         nodeExpanded = solution[1]
+                        depth = solution[2]
                         self.showComputingTime(screen, algorithm)
                         self.showText(screen, pygame.font.match_font(
                             'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(depth), WHITE, 35, 655, 355)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:
@@ -340,9 +350,12 @@ class Interface:
                         solution = algorithm.start()
                         solutionWorld = solution[0]
                         nodeExpanded = solution[1]
+                        depth = solution[2]
                         self.showComputingTime(screen, algorithm)
                         self.showText(screen, pygame.font.match_font(
                             'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(depth), WHITE, 35, 655, 355)
                         self.setSolutionWorld(solutionWorld)
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:

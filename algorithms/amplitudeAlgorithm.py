@@ -25,77 +25,74 @@ class AmplitudeAlgorithm:
         currentNode = stack[0]
         expandedNodes = 0
         depth = 0
+
         while not (currentNode.isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
             print("---")
             print(currentNode.getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
-                if (currentNode.avoidGoBack("right")):
+                # if (currentNode.avoidGoBack("right", start1, start2, flower1, flower2)):
 
-                    son = Node(currentNode.getState(), currentNode,
-                               "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.rightMovement(marioPos))
+                son = Node(currentNode.getState(), currentNode,
+                           "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.rightMovement(marioPos))
+                son.moveRight(marioPos)
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.rightMovement(marioPos))
-                    son.moveRight(marioPos)
                     stack.append(son)
-                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if left side is free
             # if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.getFather().getOperator() != "right"):
             if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
-                if (currentNode.avoidGoBack("left")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.leftMovement(marioPos))
+               # if (currentNode.avoidGoBack("left", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.leftMovement(marioPos))
+                son.moveLeft(marioPos)
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.leftMovement(marioPos))
-                    son.moveLeft(marioPos)
                     stack.append(son)
-                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if down side is free
             # if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "up"):
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
-                if (currentNode.avoidGoBack("down")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.downMovement(marioPos))
+               # if (currentNode.avoidGoBack("down", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.downMovement(marioPos))
+                son.moveDown(marioPos)
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.downMovement(marioPos))
-                    son.moveDown(marioPos)
                     stack.append(son)
-                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if up side is free
             # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "down"):
-            if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
-                if (currentNode.avoidGoBack("up")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.upMovement(marioPos))
+            if not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1:
+                # if (currentNode.avoidGoBack("up", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.upMovement(marioPos))
+                son.moveUp(marioPos)
+                if son.avoidGoBack2():
                     son.setMarioPos(son.upMovement(marioPos))
-                    son.moveUp(marioPos)
                     stack.append(son)
-                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
-
             stack.pop(0)
-            expandedNodes += 1
+
             currentNode = stack[0]
+            expandedNodes += 1
             marioPos = currentNode.getMarioPos()
 
         # print(currentNode.getFather().getDepth())

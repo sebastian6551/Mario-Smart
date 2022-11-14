@@ -2,7 +2,7 @@ from node import Node
 from time import process_time
 
 
-class GreedyAlgorithm:
+class StarAlgorithm:
     def __init__(self, world):
         self.emptyNode = Node(None, None, "first father", -1, 0, 0, 0)
         self.firstNode = Node(world, self.emptyNode, " ", 0, 0, 0, 0)
@@ -11,8 +11,8 @@ class GreedyAlgorithm:
         self.stack = [self.firstNode]
         self.computingTime = ""
 
-    def getNodeMinHeuristic(self, stack):
-        minNode = min(stack, key=lambda node: node.getHeuristic())
+    def getNodeMinSumCostHeuristic(self, stack):
+        minNode = min(stack, key=lambda node: node.getSumCostHeuristic())
         return minNode
 
     def getComputingTime(self):
@@ -49,12 +49,13 @@ class GreedyAlgorithm:
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.rightMovement(marioPos))
                 son.moveRight(marioPos)
-                if (son.compareCicles2()):
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.rightMovement(marioPos))
                     sonManhattanDistance = son.calculateManhattanDistance(
                     self.princessPos)
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
+                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
@@ -67,14 +68,14 @@ class GreedyAlgorithm:
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.leftMovement(marioPos))
                 son.moveLeft(marioPos)
-                if (son.compareCicles2()):
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.leftMovement(marioPos))
                     sonManhattanDistance = son.calculateManhattanDistance(
                     self.princessPos)
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
+                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -87,12 +88,13 @@ class GreedyAlgorithm:
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.downMovement(marioPos))
                 son.moveDown(marioPos)
-                if (son.compareCicles2()):
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.downMovement(marioPos))
                     sonManhattanDistance = son.calculateManhattanDistance(
                     self.princessPos)
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
+                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
@@ -104,14 +106,16 @@ class GreedyAlgorithm:
                 # if (currentNode.compareCicles("up")):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                
                 son.setNewCost(son.upMovement(marioPos))
                 son.moveUp(marioPos)
-                if (son.compareCicles2()):
+                if (son.avoidGoBack2()):
                     son.setMarioPos(son.upMovement(marioPos))
                     sonManhattanDistance = son.calculateManhattanDistance(
                     self.princessPos)
                     sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
                     son.setHeuristic(sonHeuristic)
+                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
 
                     if (son.getDepth() > depth):
@@ -121,7 +125,7 @@ class GreedyAlgorithm:
 
             stack.remove(currentNode)
 
-            currentNode = self.getNodeMinHeuristic(stack)
+            currentNode = self.getNodeMinSumCostHeuristic(stack)
             expandedNodes += 1
             marioPos = currentNode.getMarioPos()
             print("Mario pos:", marioPos)

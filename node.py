@@ -467,6 +467,7 @@ return True"""
                 self.setAwaitingCharacter(self.FLOWER)
         elif self.__state[i, j] == self.STAR:
             if self.getFlower() == 0:  # Mario can get the star
+                self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
                 self.setStar(self.getStar() + 6)
                 self.setAwaitingCharacter(self.EMPTY)
             else:

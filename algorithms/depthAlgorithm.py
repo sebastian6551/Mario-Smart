@@ -44,10 +44,11 @@ class DepthAlgorithm:
                 son.setNewCost(son.rightMovement(marioPos))
                 son.moveRight(marioPos)
                 if (son.compareCicles2()):
+                    son.setMarioPos(son.rightMovement(marioPos))
                     stack.insert(0, son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
 
             # Check if left side is free
@@ -60,10 +61,11 @@ class DepthAlgorithm:
                 son.setNewCost(son.leftMovement(marioPos))
                 son.moveLeft(marioPos)
                 if (son.compareCicles2()):
+                    son.setMarioPos(son.leftMovement(marioPos))
                     stack.insert(0, son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
 
             # Check if down side is free
@@ -76,10 +78,11 @@ class DepthAlgorithm:
                 son.setNewCost(son.downMovement(marioPos))
                 son.moveDown(marioPos)
                 if (son.compareCicles2()):
+                    son.setMarioPos(son.downMovement(marioPos))
                     stack.insert(0, son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
 
             # Check if up side is free
@@ -91,17 +94,17 @@ class DepthAlgorithm:
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.upMovement(marioPos))
                 son.moveUp(marioPos)
-                print("entreAntesIF")
                 if (son.compareCicles2()):
+                    son.setMarioPos(son.upMovement(marioPos))
                     stack.insert(0, son)
-                    son.searchForMario()
-                    print("entreDespuesIF")
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
 
+
             currentNode = stack[0]
-            marioPos = currentNode.searchForMario()
+            marioPos = currentNode.getMarioPos()
 
         # print(currentNode.getFather().getDepth())
         # print(currentNode.getState())

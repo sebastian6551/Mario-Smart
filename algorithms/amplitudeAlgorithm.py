@@ -26,11 +26,11 @@ class AmplitudeAlgorithm:
         expandedNodes = 0
         depth = 0
 
-        while not (stack[0].isGoal()):
+        while not (currentNode.isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
             print("---")
-            print(stack[0].getMarioPos())
+            print(currentNode.getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
                 # if (currentNode.avoidGoBack("right", start1, start2, flower1, flower2)):
 
@@ -39,8 +39,8 @@ class AmplitudeAlgorithm:
                 son.setNewCost(son.rightMovement(marioPos))
                 son.moveRight(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.rightMovement(marioPos))
                     stack.append(son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())
@@ -54,8 +54,8 @@ class AmplitudeAlgorithm:
                 son.setNewCost(son.leftMovement(marioPos))
                 son.moveLeft(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.leftMovement(marioPos))
                     stack.append(son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())
@@ -69,23 +69,23 @@ class AmplitudeAlgorithm:
                 son.setNewCost(son.downMovement(marioPos))
                 son.moveDown(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.downMovement(marioPos))
                     stack.append(son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())
 
             # Check if up side is free
             # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "down"):
-            if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
+            if not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1:
                 # if (currentNode.avoidGoBack("up", start1, start2, flower1, flower2)):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.upMovement(marioPos))
                 son.moveUp(marioPos)
-                if (son.avoidGoBack2()):
+                if son.avoidGoBack2():
+                    son.setMarioPos(son.upMovement(marioPos))
                     stack.append(son)
-                    son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())
@@ -93,7 +93,7 @@ class AmplitudeAlgorithm:
 
             currentNode = stack[0]
             expandedNodes += 1
-            marioPos = currentNode.searchForMario()
+            marioPos = currentNode.getMarioPos()
 
         # print(currentNode.getFather().getDepth())
         # print(currentNode.getState())

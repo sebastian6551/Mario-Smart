@@ -41,10 +41,9 @@ class CostAlgorithm:
                 son.setNewCost(son.rightMovement(marioPos))
                 son.moveRight(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.rightMovement(marioPos))
                     stack.append(son)
-
                     print("El costo actual es: " + str(son.getCost()))
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -59,6 +58,7 @@ class CostAlgorithm:
                 son.setNewCost(son.leftMovement(marioPos))
                 son.moveLeft(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.leftMovement(marioPos))
                     stack.append(son)
 
                     if (son.getDepth() > depth):
@@ -75,6 +75,7 @@ class CostAlgorithm:
                 son.setNewCost(son.downMovement(marioPos))
                 son.moveDown(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.downMovement(marioPos))
                     stack.append(son)
 
                     if (son.getDepth() > depth):
@@ -91,8 +92,8 @@ class CostAlgorithm:
                 son.setNewCost(son.upMovement(marioPos))
                 son.moveUp(marioPos)
                 if (son.avoidGoBack2()):
+                    son.setMarioPos(son.upMovement(marioPos))
                     stack.append(son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -104,7 +105,7 @@ class CostAlgorithm:
             currentNode = self.getNodeMinCost(stack)
             expandedNodes += 1
             print("costo actual: " + str(currentNode.getCost()))
-            marioPos = currentNode.searchForMario()
+            marioPos = currentNode.getMarioPos()
 
         # print(currentNode.getFather().getDepth())
         # print(currentNode.getState())

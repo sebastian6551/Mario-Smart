@@ -25,21 +25,28 @@ class CostAlgorithm:
 
         stack = self.stack
         marioPos = self.marioPos
-        #marioPos0 = self.marioPos0
+        # marioPos0 = self.marioPos0
         currentNode = stack[0]
         expandedNodes = 0
         depth = 0
+        starts = currentNode.searchForStart()
+        start1 = starts[0]
+        start2 = starts[1]
+        flowers = currentNode.searchForFlower()
+        flower1 = flowers[0]
+        flower2 = flowers[1]
         while not (currentNode.isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
             print("---")
             print(currentNode.getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
-                if (currentNode.avoidGoBack("right")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.rightMovement(marioPos))
-                    son.moveRight(marioPos)
+                # if (currentNode.avoidGoBack("right", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.rightMovement(marioPos))
+                son.moveRight(marioPos)
+                if (son.avoidGoBack2("right", start1, start2, flower1, flower2)):
                     stack.append(son)
                     print("El costo actual es: " + str(son.getCost()))
                     son.searchForMario()
@@ -50,11 +57,12 @@ class CostAlgorithm:
             # Check if left side is free
             # if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.getFather().getOperator() != "right"):
             if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
-                if (currentNode.avoidGoBack("left")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.leftMovement(marioPos))
-                    son.moveLeft(marioPos)
+               # if (currentNode.avoidGoBack("left", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.leftMovement(marioPos))
+                son.moveLeft(marioPos)
+                if (son.avoidGoBack2("left", start1, start2, flower1, flower2)):
                     stack.append(son)
                     son.searchForMario()
                     if (son.getDepth() > depth):
@@ -64,11 +72,12 @@ class CostAlgorithm:
             # Check if down side is free
             # if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "up"):
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
-                if (currentNode.avoidGoBack("down")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.downMovement(marioPos))
-                    son.moveDown(marioPos)
+               # if (currentNode.avoidGoBack("down", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.downMovement(marioPos))
+                son.moveDown(marioPos)
+                if (son.avoidGoBack2("down", start1, start2, flower1, flower2)):
                     stack.append(son)
                     son.searchForMario()
                     if (son.getDepth() > depth):
@@ -78,22 +87,30 @@ class CostAlgorithm:
             # Check if up side is free
             # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "down"):
             if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
-                if (currentNode.avoidGoBack("up")):
-                    son = Node(currentNode.getState(), currentNode,
-                               "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                    son.setNewCost(son.upMovement(marioPos))
-                    son.moveUp(marioPos)
+               # if (currentNode.avoidGoBack("up", start1, start2, flower1, flower2)):
+                son = Node(currentNode.getState(), currentNode,
+                           "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
+                son.setNewCost(son.upMovement(marioPos))
+                son.moveUp(marioPos)
+                if (son.avoidGoBack2("up", start1, start2, flower1, flower2)):
                     stack.append(son)
                     son.searchForMario()
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())
             # stack.pop(0)
-            #currentNode = stack[0]
+            # currentNode = stack[0]
             stack.remove(currentNode)
             expandedNodes += 1
             currentNode = self.getNodeMinCost(stack)
-
+            print("costo actual: " + str(currentNode.getCost()))
+            starts = currentNode.searchForStart()
+            start1 = starts[0]
+            start2 = starts[1]
+            flowers = currentNode.searchForFlower()
+            flower1 = flowers[0]
+            flower2 = flowers[1]
+            print("flower", flower1, flower2)
             marioPos = currentNode.searchForMario()
 
         # print(currentNode.getFather().getDepth())

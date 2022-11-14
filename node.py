@@ -19,6 +19,7 @@ class Node:
         self.__flower = flower  # Cost to go through a koopa when having a flower comes down to 1
         self.__marioPos = []
         self.__heuristic = 0  # The correct value is given only when the greedy algorithm is used
+        self.__sumCostHeuristic = 0
         self.__awaitingCharacter = 0
 
     def getState(self):
@@ -53,6 +54,9 @@ class Node:
 
     def getAwaitingCharacter(self):
         return self.__awaitingCharacter
+    
+    def getSumCostHeuristic(self):
+        return self.__sumCostHeuristic
 
     def setState(self, newState):
         self.__state = newState
@@ -83,6 +87,9 @@ class Node:
 
     def setAwaitingCharacter(self, awaitingCharacter):
         self.__awaitingCharacter = awaitingCharacter
+
+    def setSumCostHeuristic(self, newValue):
+        self.__sumCostHeuristic = newValue
 
     def calculateManhattanDistance(self, princessPos):
         iDistance = princessPos[0] - self.getMarioPos()[0]

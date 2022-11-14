@@ -3,6 +3,7 @@ from algorithms.depthAlgorithm import DepthAlgorithm
 from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
 from algorithms.costAlgorithm import CostAlgorithm
 from algorithms.greedyAlgorithm import GreedyAlgorithm
+from algorithms.starAlgorithm import StarAlgorithm
 
 BLACK = (0, 0, 0)
 YELLOW = (255, 205, 104)
@@ -361,12 +362,20 @@ class Interface:
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:
                         print("A*")
                         # Set the title of the screen.
-                        """pygame.display.set_caption("Mario smart A*")               
+                        pygame.display.set_caption("Mario smart A*")               
                         self.showText(screen, pygame.font.match_font(
                             'arial'), "A*", YELLOW, 35, 655, 140)
-                        algorithm = DepthAlgorithm(self.__initWorld)
-                        solutionWorld = algorithm.start()
+                        algorithm = StarAlgorithm(self.__initWorld)
+                        solution = algorithm.start()
+                        solutionWorld = solution[0]
+                        nodeExpanded = solution[1]
+                        depth = solution[2]
+                        self.showComputingTime(screen, algorithm)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(nodeExpanded), WHITE, 35, 655, 295)
+                        self.showText(screen, pygame.font.match_font(
+                            'arial'), str(depth), WHITE, 35, 655, 355)
                         self.setSolutionWorld(solutionWorld)
-                        self.interfaceSolution(press, grid, i, screen, clock)"""
+                        self.interfaceSolution(press, grid, i, screen, clock)
                     # print(pos[0])
                     # print(pos[1])

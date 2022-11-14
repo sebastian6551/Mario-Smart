@@ -1,7 +1,4 @@
 import numpy as np
-from algorithms.depthAlgorithm import DepthAlgorithm
-from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
-from algorithms.costAlgorithm import CostAlgorithm
 from interface import Interface
 
 with open('matriz.txt', 'r') as f:

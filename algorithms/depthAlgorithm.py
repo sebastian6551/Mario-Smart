@@ -49,7 +49,6 @@ class DepthAlgorithm:
                 son.setNewCost(son.rightMovement(marioPos))
                 son.moveRight(marioPos)
                 if (son.compareCicles2("right", start1, start2, flower1, flower2)):
-
                     stack.insert(0, son)
                     son.searchForMario()
                     if (son.getDepth() > depth):
@@ -97,9 +96,11 @@ class DepthAlgorithm:
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
                 son.setNewCost(son.upMovement(marioPos))
                 son.moveUp(marioPos)
+                print("entreAntesIF")
                 if (son.compareCicles2("up", start1, start2, flower1, flower2)):
                     stack.insert(0, son)
                     son.searchForMario()
+                    print("entreDespuesIF")
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
                     print(son.getMarioPos())

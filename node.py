@@ -372,7 +372,9 @@ return True"""
         grandFatherNode = fatherNode.getFather()
         marioPos = self.getMarioPos()
         currentNodePosition = currentNode.searchForMario()
-        if grandFatherNode.getOperator() != "first father":
+        while grandFatherNode.getOperator() != "first father":
+            print("father", grandFatherNode.getMarioPos(),
+                  "mia", currentNodePosition)
             if (grandFatherNode.getMarioPos() == currentNodePosition):
                 print("flowercant", grandFatherNode.getFlower(),
                       currentNode.getFlower())
@@ -382,6 +384,8 @@ return True"""
                     grandFatherNode = grandFatherNode.getFather()
                 else:
                     return False
+            else:
+                grandFatherNode = grandFatherNode.getFather()
         return True
 
     def moveRight(self, posMario):

@@ -48,10 +48,12 @@ class CostAlgorithm:
                 son.moveRight(marioPos)
                 if (son.avoidGoBack2("right", start1, start2, flower1, flower2)):
                     stack.append(son)
+
                     print("El costo actual es: " + str(son.getCost()))
-                    son.searchForMario()
+                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
 
             # Check if left side is free
@@ -64,9 +66,10 @@ class CostAlgorithm:
                 son.moveLeft(marioPos)
                 if (son.avoidGoBack2("left", start1, start2, flower1, flower2)):
                     stack.append(son)
-                    son.searchForMario()
+                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+                    
                     print(son.getMarioPos())
 
             # Check if down side is free
@@ -79,9 +82,10 @@ class CostAlgorithm:
                 son.moveDown(marioPos)
                 if (son.avoidGoBack2("down", start1, start2, flower1, flower2)):
                     stack.append(son)
-                    son.searchForMario()
+                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+                        
                     print(son.getMarioPos())
 
             # Check if up side is free
@@ -94,9 +98,10 @@ class CostAlgorithm:
                 son.moveUp(marioPos)
                 if (son.avoidGoBack2("up", start1, start2, flower1, flower2)):
                     stack.append(son)
-                    son.searchForMario()
+                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
+
                     print(son.getMarioPos())
             # stack.pop(0)
             # currentNode = stack[0]

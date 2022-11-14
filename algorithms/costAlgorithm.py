@@ -101,8 +101,9 @@ class CostAlgorithm:
             # stack.pop(0)
             # currentNode = stack[0]
             stack.remove(currentNode)
-            expandedNodes += 1
+
             currentNode = self.getNodeMinCost(stack)
+            expandedNodes += 1
             print("costo actual: " + str(currentNode.getCost()))
             starts = currentNode.searchForStart()
             start1 = starts[0]

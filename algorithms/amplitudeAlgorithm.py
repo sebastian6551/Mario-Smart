@@ -95,8 +95,9 @@ class AmplitudeAlgorithm:
                         depth = son.getDepth()
                     print(son.getMarioPos())
             stack.pop(0)
-            expandedNodes += 1
+
             currentNode = stack[0]
+            expandedNodes += 1
             starts = currentNode.searchForStart()
             start1 = starts[0]
             start2 = starts[1]

@@ -67,6 +67,9 @@ class GreedyAlgorithm:
                 if (son.compareCicles2("right", start1, start2, flower1, flower2)):
                     stack.append(son)
                     son.searchForMario()
+                    if (son.getDepth() > depth):
+                        depth = son.getDepth()
+                    print(son.getMarioPos(), "heurística: ", son.getHeuristic())
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if left side is free
@@ -133,8 +136,9 @@ class GreedyAlgorithm:
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             stack.remove(currentNode)
-            expandedNodes += 1
+
             currentNode = self.getNodeMinHeuristic(stack)
+            expandedNodes += 1
             starts = currentNode.searchForStart()
             start1 = starts[0]
             start2 = starts[1]

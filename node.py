@@ -348,7 +348,7 @@ return True"""
                     return True
         return True
 
-    def avoidGoBack2(self, operator, start1, start2, flower1, flower2):
+    def avoidGoBack2(self):
         currentNode = self
         fatherNode = self.getFather()
         grandFatherNode = fatherNode.getFather()
@@ -366,7 +366,7 @@ return True"""
                     return False
         return True
 
-    def compareCicles2(self, operator, start1, start2, flower1, flower2):
+    def compareCicles2(self):
         currentNode = self
         fatherNode = self.getFather()
         grandFatherNode = fatherNode.getFather()
@@ -537,38 +537,6 @@ return True"""
         # print("DESPUES DE SEARCH FOR MARIO: " +
         #      str(marioPos[0]) + " " + str(marioPos[1]))
         return marioPos
-
-    def searchForStart(self):
-        start1 = [-2, -2]  # Mario position [x,y]
-        start2 = [-2, -2]
-        cont = 0
-        state = self.__state
-        for i in range(10):
-            for j in range(10):
-                if (state[i, j] == self.STAR and cont == 0):
-                    start1[0] = i
-                    start1[1] = j
-                    cont += 1
-                elif (state[i, j] == self.STAR and cont == 1):
-                    start2[0] = i
-                    start2[1] = j
-        return [start1, start2]
-
-    def searchForFlower(self):
-        flower1 = [-2, -2]  # Mario position [x,y]
-        flower2 = [-2, -2]
-        cont = 0
-        state = self.__state
-        for i in range(10):
-            for j in range(10):
-                if (state[i, j] == self.FLOWER and cont == 0):
-                    flower1[0] = i
-                    flower1[1] = j
-                    cont += 1
-                elif (state[i, j] == self.FLOWER and cont == 1):
-                    flower2[0] = i
-                    flower2[1] = j
-        return [flower1, flower2]
 
     def isGoal(self):
         state = self.__state

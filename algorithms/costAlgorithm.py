@@ -25,10 +25,10 @@ class CostAlgorithm:
 
         stack = self.stack
         marioPos = self.marioPos
-        # marioPos0 = self.marioPos0
         currentNode = stack[0]
         expandedNodes = 0
         depth = 0
+
         while not (currentNode.isGoal()):
             # Check if right side is free
             # if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1 and currentNode.getFather().getOperator() != "left"):
@@ -38,12 +38,18 @@ class CostAlgorithm:
                 # if (currentNode.avoidGoBack("right", start1, start2, flower1, flower2)):
                 son = Node(currentNode.getState(), currentNode,
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.rightMovement(marioPos))
-                son.moveRight(marioPos)
-                if (son.avoidGoBack2()):
-                    son.setMarioPos(son.rightMovement(marioPos))
+
+                right = son.rightMovement(marioPos)
+
+                if (son.avoidGoBack2(right)):
+                    son.setNewCost(right)
+                    son.setMarioPos(right)
                     stack.append(son)
+
+                    son.moveRight(marioPos)
+
                     print("El costo actual es: " + str(son.getCost()))
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -55,11 +61,15 @@ class CostAlgorithm:
                # if (currentNode.avoidGoBack("left", start1, start2, flower1, flower2)):
                 son = Node(currentNode.getState(), currentNode,
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.leftMovement(marioPos))
-                son.moveLeft(marioPos)
-                if (son.avoidGoBack2()):
-                    son.setMarioPos(son.leftMovement(marioPos))
+
+                left = son.leftMovement(marioPos)
+
+                if (son.avoidGoBack2(left)):
+                    son.setNewCost(left)
+                    son.setMarioPos(left)
                     stack.append(son)
+
+                    son.moveLeft(marioPos)
 
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
@@ -72,11 +82,15 @@ class CostAlgorithm:
                # if (currentNode.avoidGoBack("down", start1, start2, flower1, flower2)):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.downMovement(marioPos))
-                son.moveDown(marioPos)
-                if (son.avoidGoBack2()):
-                    son.setMarioPos(son.downMovement(marioPos))
+
+                down = son.downMovement(marioPos)
+
+                if (son.avoidGoBack2(down)):
+                    son.setNewCost(down)
+                    son.setMarioPos(down)
                     stack.append(son)
+
+                    son.moveDown(marioPos)
 
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
@@ -89,15 +103,21 @@ class CostAlgorithm:
                # if (currentNode.avoidGoBack("up", start1, start2, flower1, flower2)):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.upMovement(marioPos))
-                son.moveUp(marioPos)
-                if (son.avoidGoBack2()):
-                    son.setMarioPos(son.upMovement(marioPos))
+
+                up = son.upMovement(marioPos)
+
+                if (son.avoidGoBack2(up)):
+                    son.setNewCost(up)
+                    son.setMarioPos(up)
                     stack.append(son)
+
+                    son.moveUp(marioPos)
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
                     print(son.getMarioPos())
+
             # stack.pop(0)
             # currentNode = stack[0]
             stack.remove(currentNode)

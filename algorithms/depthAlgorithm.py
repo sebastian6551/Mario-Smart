@@ -3,11 +3,9 @@ from time import process_time
 
 
 class DepthAlgorithm:
-
     def __init__(self, world):
         self.emptyNode = Node(None, None, "first father", -1, 0, 0, 0)
         self.firstNode = Node(world, self.emptyNode, " ", 0, 0, 0, 0)
-        #marioPos0 = firstNode.searchForMario()
         self.marioPos = self.firstNode.searchForMario()
         self.stack = [self.firstNode]
         self.computingTime = ""
@@ -23,15 +21,13 @@ class DepthAlgorithm:
 
         stack = self.stack
         marioPos = self.marioPos
-        #marioPos0 = self.marioPos0
-
         currentNode = stack[0]
         expandedNodes = 0
         depth = 0
 
-        while not (stack[0].isGoal()):
+        while not (currentNode.isGoal()):
             print("---")
-            print(stack[0].getMarioPos())
+            print(currentNode.getMarioPos())
 
             stack.pop(0)
             expandedNodes += 1
@@ -41,11 +37,16 @@ class DepthAlgorithm:
                 # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "right") and currentNode.compareFatherAll(marioPos, marioPos0, "right")):
                 son = Node(currentNode.getState(), currentNode,
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.rightMovement(marioPos))
-                son.moveRight(marioPos)
-                if (son.compareCicles2()):
-                    son.setMarioPos(son.rightMovement(marioPos))
+
+                right = son.rightMovement(marioPos)
+
+                if (son.compareCicles2(right)):
+                    son.setNewCost(right)
+                    son.setMarioPos(right)
+
+                    son.moveRight(marioPos)
                     stack.insert(0, son)
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -58,11 +59,16 @@ class DepthAlgorithm:
                 # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "left") and currentNode.compareFatherAll(marioPos, marioPos0, "left")):
                 son = Node(currentNode.getState(), currentNode,
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.leftMovement(marioPos))
-                son.moveLeft(marioPos)
-                if (son.compareCicles2()):
-                    son.setMarioPos(son.leftMovement(marioPos))
+
+                left = son.leftMovement(marioPos)
+
+                if (son.compareCicles2(left)):
+                    son.setNewCost(left)
+                    son.setMarioPos(left)
+
+                    son.moveLeft(marioPos)
                     stack.insert(0, son)
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -75,11 +81,16 @@ class DepthAlgorithm:
                 # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "down") and currentNode.compareFatherAll(marioPos, marioPos0, "down")):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.downMovement(marioPos))
-                son.moveDown(marioPos)
-                if (son.compareCicles2()):
-                    son.setMarioPos(son.downMovement(marioPos))
+
+                down = son.downMovement(marioPos)
+
+                if (son.compareCicles2(down)):
+                    son.setNewCost(down)
+                    son.setMarioPos(down)
+
+                    son.moveDown(marioPos)
                     stack.insert(0, son)
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -92,16 +103,20 @@ class DepthAlgorithm:
                 # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "up") and currentNode.compareFatherAll(marioPos, marioPos0, "up")):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                son.setNewCost(son.upMovement(marioPos))
-                son.moveUp(marioPos)
-                if (son.compareCicles2()):
-                    son.setMarioPos(son.upMovement(marioPos))
+
+                up = son.upMovement(marioPos)
+
+                if (son.compareCicles2(up)):
+                    son.setNewCost(up)
+                    son.setMarioPos(up)
+
+                    son.moveUp(marioPos)
                     stack.insert(0, son)
+
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
                     print(son.getMarioPos())
-
 
             currentNode = stack[0]
             marioPos = currentNode.getMarioPos()

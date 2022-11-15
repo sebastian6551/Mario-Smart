@@ -355,14 +355,13 @@ return True"""
                     return True
         return True
 
-    def avoidGoBack2(self):
+    def avoidGoBack2(self, nextMarioPos):
         currentNode = self
         fatherNode = self.getFather()
         grandFatherNode = fatherNode.getFather()
-        marioPos = self.getMarioPos()
-        currentNodePosition = currentNode.searchForMario()
+        nextNodePosition = nextMarioPos
         if grandFatherNode.getOperator() != "first father":
-            if (grandFatherNode.getMarioPos() == currentNodePosition):
+            if (grandFatherNode.getMarioPos() == nextNodePosition):
                 print("flowercant", grandFatherNode.getFlower(),
                       currentNode.getFlower())
                 if (grandFatherNode.getStar() != currentNode.getStar() or grandFatherNode.getFlower() != currentNode.getFlower() or (fatherNode.getFlower() == 1 and currentNode.getFlower() == 0)):
@@ -373,16 +372,15 @@ return True"""
                     return False
         return True
 
-    def compareCicles2(self):
+    def compareCicles2(self, nextMarioPos):
         currentNode = self
         fatherNode = self.getFather()
         grandFatherNode = fatherNode.getFather()
-        marioPos = self.getMarioPos()
-        currentNodePosition = currentNode.searchForMario()
+        nextNodePosition = nextMarioPos
         while grandFatherNode.getOperator() != "first father":
             print("father", grandFatherNode.getMarioPos(),
-                  "mia", currentNodePosition)
-            if (grandFatherNode.getMarioPos() == currentNodePosition):
+                  "mia", nextNodePosition)
+            if (grandFatherNode.getMarioPos() == nextNodePosition):
                 print("flowercant", grandFatherNode.getFlower(),
                       currentNode.getFlower())
                 if (grandFatherNode.getStar() != currentNode.getStar() or grandFatherNode.getFlower() != currentNode.getFlower() or (fatherNode.getFlower() == 1 and currentNode.getFlower() == 0)):

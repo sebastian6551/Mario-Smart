@@ -46,7 +46,6 @@ class CostAlgorithm:
                 if (son.avoidGoBack2(right)):
                     stack.append(son)
                     print("El costo actual es: " + str(son.getCost()))
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 

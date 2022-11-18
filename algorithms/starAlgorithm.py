@@ -47,20 +47,18 @@ class StarAlgorithm:
                 # if (currentNode.compareCicles("right")):
                 son = Node(currentNode.getState(), currentNode,
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                
+
                 right = son.rightMovement(marioPos)
-
+                son.setNewCost(right)
+                son.setMarioPos(right)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
+                son.moveRight(marioPos)
                 if (son.avoidGoBack2(right)):
-                    son.setNewCost(right)
-                    son.setMarioPos(right)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
-                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
-
-                    son.moveRight(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -71,20 +69,18 @@ class StarAlgorithm:
                # if (currentNode.compareCicles("left")):
                 son = Node(currentNode.getState(), currentNode,
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                
+
                 left = son.leftMovement(marioPos)
-
+                son.setNewCost(left)
+                son.setMarioPos(left)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
+                son.moveLeft(marioPos)
                 if (son.avoidGoBack2(left)):
-                    son.setNewCost(left)
-                    son.setMarioPos(left)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
-                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
-
-                    son.moveLeft(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -95,20 +91,18 @@ class StarAlgorithm:
                # if (currentNode.compareCicles("down")):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                
+
                 down = son.downMovement(marioPos)
-
+                son.setNewCost(down)
+                son.setMarioPos(down)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
+                son.moveDown(marioPos)
                 if (son.avoidGoBack2(down)):
-                    son.setNewCost(down)
-                    son.setMarioPos(down)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
-                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
-
-                    son.moveDown(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
@@ -121,18 +115,16 @@ class StarAlgorithm:
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 up = son.upMovement(marioPos)
-
+                son.setNewCost(up)
+                son.setMarioPos(up)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
+                son.moveUp(marioPos)
                 if (son.avoidGoBack2(up)):
-                    son.setNewCost(up)
-                    son.setMarioPos(up)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
-                    son.setSumCostHeuristic(son.getHeuristic() + son.getCost())
                     stack.append(son)
-
-                    son.moveUp(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 

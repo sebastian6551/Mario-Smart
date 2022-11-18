@@ -39,17 +39,13 @@ class DepthAlgorithm:
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 right = son.rightMovement(marioPos)
-
+                son.setNewCost(right)
+                son.setMarioPos(right)
+                son.moveRight(marioPos)
                 if (son.compareCicles2(right)):
-                    son.setNewCost(right)
-                    son.setMarioPos(right)
-
-                    son.moveRight(marioPos)
                     stack.insert(0, son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if left side is free
@@ -61,17 +57,13 @@ class DepthAlgorithm:
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 left = son.leftMovement(marioPos)
-
+                son.setNewCost(left)
+                son.setMarioPos(left)
+                son.moveLeft(marioPos)
                 if (son.compareCicles2(left)):
-                    son.setNewCost(left)
-                    son.setMarioPos(left)
-
-                    son.moveLeft(marioPos)
                     stack.insert(0, son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if down side is free
@@ -83,17 +75,13 @@ class DepthAlgorithm:
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 down = son.downMovement(marioPos)
-
+                son.setNewCost(down)
+                son.setMarioPos(down)
+                son.moveDown(marioPos)
                 if (son.compareCicles2(down)):
-                    son.setNewCost(down)
-                    son.setMarioPos(down)
-
-                    son.moveDown(marioPos)
                     stack.insert(0, son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             # Check if up side is free
@@ -105,17 +93,13 @@ class DepthAlgorithm:
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 up = son.upMovement(marioPos)
-
+                son.setNewCost(up)
+                son.setMarioPos(up)
+                son.moveUp(marioPos)
                 if (son.compareCicles2(up)):
-                    son.setNewCost(up)
-                    son.setMarioPos(up)
-
-                    son.moveUp(marioPos)
                     stack.insert(0, son)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos())
 
             currentNode = stack[0]

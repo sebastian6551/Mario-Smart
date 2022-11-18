@@ -38,7 +38,7 @@ class GreedyAlgorithm:
         currentNode = stack[0]
         expandedNodes = 0
         depth = 0
-        
+
         while not (currentNode.isGoal()):
             # Check if right side is free
             print("---")
@@ -48,20 +48,17 @@ class GreedyAlgorithm:
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 right = son.rightMovement(marioPos)
-
+                son.setNewCost(right)
+                son.setMarioPos(right)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.moveRight(marioPos)
                 if (son.compareCicles2(right)):
-                    son.setNewCost(right)
-                    son.setMarioPos(right)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
                     stack.append(son)
-
-                    son.moveRight(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if left side is free
@@ -70,62 +67,53 @@ class GreedyAlgorithm:
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
                 left = son.leftMovement(marioPos)
-
+                son.setNewCost(left)
+                son.setMarioPos(left)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.moveLeft(marioPos)
                 if (son.compareCicles2(left)):
-                    son.setNewCost(left)
-                    son.setMarioPos(left)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
                     stack.append(son)
-
-                    son.moveLeft(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if down side is free
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                
+
                 down = son.downMovement(marioPos)
-
+                son.setNewCost(down)
+                son.setMarioPos(down)
+                sonManhattanDistance = son.calculateManhattanDistance(
+                    self.princessPos)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.moveDown(marioPos)
                 if (son.compareCicles2(down)):
-                    son.setNewCost(down)
-                    son.setMarioPos(down)
-                    sonManhattanDistance = son.calculateManhattanDistance(self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
                     stack.append(son)
-
-                    son.moveDown(marioPos)
-                    
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-
                     print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if up side is free
             if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
-                
+
                 up = son.upMovement(marioPos)
-
-                if (son.compareCicles2(up)):
-                    son.setNewCost(up)
-                    son.setMarioPos(up)
-                    sonManhattanDistance = son.calculateManhattanDistance(
+                son.setNewCost(up)
+                son.setMarioPos(up)
+                sonManhattanDistance = son.calculateManhattanDistance(
                     self.princessPos)
-                    sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
-                    son.setHeuristic(sonHeuristic)
+                sonHeuristic = son.calculateHeuristic(sonManhattanDistance)
+                son.setHeuristic(sonHeuristic)
+                son.moveUp(marioPos)
+                if (son.compareCicles2(up)):
                     stack.append(son)
-
-                    son.moveUp(marioPos)
-
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 

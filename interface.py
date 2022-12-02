@@ -4,6 +4,7 @@ from algorithms.amplitudeAlgorithm import AmplitudeAlgorithm
 from algorithms.costAlgorithm import CostAlgorithm
 from algorithms.greedyAlgorithm import GreedyAlgorithm
 from algorithms.starAlgorithm import StarAlgorithm
+import sys
 
 BLACK = (0, 0, 0)
 YELLOW = (255, 205, 104)
@@ -60,7 +61,7 @@ class Interface:
             pos = pygame.mouse.get_pos()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    press = True
+                    sys.exit()
 
                     # draw the grid
             for row in range(10):
@@ -148,6 +149,7 @@ class Interface:
                 sonido_fondo = pygame.mixer.Sound("music/fondo.wav")
                 pygame.mixer.Sound.play(sonido_fondo)
                 i += 1
+                press = True
 
         # advance and update the screen with what we have drawn.
             pygame.display.flip()
@@ -182,29 +184,7 @@ class Interface:
 
         pygame.display.set_caption("Mario smart")
 
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Amplitud", WHITE, 35, 655, 20)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Profundidad", WHITE, 35, 655, 50)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Costo", WHITE, 35, 655, 80)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Avara", WHITE, 35, 655, 110)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "A*", WHITE, 35, 655, 140)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Tiempo de cómputo: ", WHITE, 35, 655, 200)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "#nodos expandidos: ", WHITE, 35, 655, 265)
-
-        self.showText(screen, pygame.font.match_font(
-            'arial'), "Profundidad: ", WHITE, 35, 655, 325)
+        self.showCaptions(screen)
 
         for row in range(10):
             for column in range(10):
@@ -284,10 +264,12 @@ class Interface:
             pos = pygame.mouse.get_pos()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    press = True
+                    sys.exit()
                 elif event.type == pygame.MOUSEBUTTONDOWN:
                     if pos[0] > 598 and pos[0] < 713 and pos[1] > 8 and pos[1] < 29:
                         print("Amplitud")
+                        screen.fill(BLACK)
+                        self.showCaptions(screen)
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart amplitud")
                         self.showText(screen, pygame.font.match_font(
@@ -307,6 +289,8 @@ class Interface:
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 581 and pos[0] < 732 and pos[1] > 42 and pos[1] < 62:
                         print("Profundidad")
+                        screen.fill(BLACK)
+                        self.showCaptions(screen)
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart profundidad")
                         self.showText(screen, pygame.font.match_font(
@@ -325,6 +309,8 @@ class Interface:
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 618 and pos[0] < 692 and pos[1] > 70 and pos[1] < 90:
                         print("Costo")
+                        screen.fill(BLACK)
+                        self.showCaptions(screen)
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart costo")
                         self.showText(screen, pygame.font.match_font(
@@ -343,6 +329,8 @@ class Interface:
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 619 and pos[0] < 692 and pos[1] > 101 and pos[1] < 123:
                         print("Avara")
+                        screen.fill(BLACK)
+                        self.showCaptions(screen)
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart avara")
                         self.showText(screen, pygame.font.match_font(
@@ -361,6 +349,8 @@ class Interface:
                         self.interfaceSolution(press, grid, i, screen, clock)
                     elif pos[0] > 641 and pos[0] < 692 and pos[1] > 130 and pos[1] < 153:
                         print("A*")
+                        screen.fill(BLACK)
+                        self.showCaptions(screen)
                         # Set the title of the screen.
                         pygame.display.set_caption("Mario smart A*")               
                         self.showText(screen, pygame.font.match_font(
@@ -379,3 +369,28 @@ class Interface:
                         self.interfaceSolution(press, grid, i, screen, clock)
                     # print(pos[0])
                     # print(pos[1])
+
+    def showCaptions(self, screen):
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Amplitud", WHITE, 35, 655, 20)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Profundidad", WHITE, 35, 655, 50)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Costo", WHITE, 35, 655, 80)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Avara", WHITE, 35, 655, 110)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "A*", WHITE, 35, 655, 140)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Tiempo de cómputo: ", WHITE, 35, 655, 200)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "#nodos expandidos: ", WHITE, 35, 655, 265)
+
+        self.showText(screen, pygame.font.match_font(
+            'arial'), "Profundidad: ", WHITE, 35, 655, 325)

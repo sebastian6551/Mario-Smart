@@ -22,6 +22,17 @@ class Node:
         self.__sumCostHeuristic = 0
         self.__awaitingCharacter = 0
 
+    def getRigthCount(self):
+        count = 0
+        currentNode = self
+        operator = currentNode.getOperator()
+        while operator != "first father":
+            if operator =="right":
+                count += 1
+            currentNode = currentNode.getFather()
+            operator = currentNode.getOperator()
+        return count
+
     def getState(self):
         return self.__state
 
@@ -106,82 +117,6 @@ class Node:
             heuristic = manhattanDistance / 2
         return heuristic
 
-    def compareState(self, father, marioPos, operator):  # True: The state changed
-        fatherNode = father
-        if (fatherNode.getOperator() != "first father"):
-            if (operator == "right"):
-                if (marioPos[1]+1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "left"):
-                if (marioPos[1]-1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "down"):
-                if (marioPos[0]+1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "up"):
-                if (marioPos[0]-1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-        return True
-
-        """ def compareState(self, father, marioPos, operator):  # True: The state changed
-        fatherNode = father
-        if (self.getOperator() != "first father"):
-            if (operator == "right"):
-                if (marioPos[1]+1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "left"):
-                if (marioPos[1]-1 == fatherNode.getMarioPos()[1] and marioPos[0] == fatherNode.getMarioPos()[0]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "down"):
-                if (marioPos[0]+1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-            if (operator == "up"):
-                if (marioPos[0]-1 == fatherNode.getMarioPos()[0] and marioPos[1] == fatherNode.getMarioPos()[1]):
-                    if ((fatherNode.getStar() > 0 and self.getStar() <= 0) or (fatherNode.getFlower() > 0 and self.getFlower() <= 0)):
-                        return True
-                    else:
-                        return False
-                else:
-                    return True
-return True"""
-
-    # True: The state changed
-
     def rightMovement(self, marioPos):
         return [marioPos[0], marioPos[1] + 1 if marioPos[1] < 9 else False]
 
@@ -195,166 +130,6 @@ return True"""
         return [marioPos[0] + 1 if marioPos[0] < 9 else False, marioPos[1]]
 
     # True means that the node can expand their sons, false means it can't
-    def compareCicles(self, operator, start1, start2, flower1, flower2):
-        currentNode = self
-        fatherNode = self.getFather()
-        marioPos = self.getMarioPos()
-        while fatherNode.getOperator() != "first father":
-            if operator == "right":
-                futureMarioPos = self.rightMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        fatherNode = fatherNode.getFather()
-                    else:
-                        return False
-                else:
-                    fatherNode = fatherNode.getFather()
-            elif operator == "left":
-                futureMarioPos = self.leftMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        fatherNode = fatherNode.getFather()
-                    else:
-                        return False
-                else:
-                    fatherNode = fatherNode.getFather()
-            elif operator == "up":
-                futureMarioPos = self.upMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        fatherNode = fatherNode.getFather()
-                    else:
-                        return False
-                else:
-                    fatherNode = fatherNode.getFather()
-            elif operator == "down":
-                futureMarioPos = self.downMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        fatherNode = fatherNode.getFather()
-                    else:
-                        return False
-                else:
-                    fatherNode = fatherNode.getFather()
-        return True
-
-    def avoidGoBack(self, operator, start1, start2, flower1, flower2):
-        currentNode = self
-        fatherNode = self.getFather()
-        marioPos = self.getMarioPos()
-        if fatherNode.getOperator() != "first father":
-            if operator == "right":
-                futureMarioPos = self.rightMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() >= 0 and (futureMarioPos == start1 or futureMarioPos == start2))
-                        or not (fatherNode.getStar() == 0 and currentNode.getStar()-1 <= 0)
-                            or (fatherNode.getStar() > 0 and currentNode.getStar()-1 >= 1)
-                            or (fatherNode.getStar() == 0 and currentNode.getStar() > 0) and
-                            (fatherNode.getFlower() >= 0 and (
-                                futureMarioPos == flower1 or futureMarioPos == flower2))
-                        or not (fatherNode.getFlower() == 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() > 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() == 0 and currentNode.getFlower() > 0)):
-                        return True
-                    else:
-                        return False
-
-                    """ if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 0)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        return True
-                    else:
-                        return False"""
-                else:
-                    return True
-            elif operator == "left":
-                futureMarioPos = self.leftMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() >= 0 and (futureMarioPos == start1 or futureMarioPos == start2))
-                        or not (fatherNode.getStar() == 0 and currentNode.getStar()-1 <= 0)
-                            or (fatherNode.getStar() > 0 and currentNode.getStar()-1 >= 1)
-                            or (fatherNode.getStar() == 0 and currentNode.getStar() > 0) and
-                            (fatherNode.getFlower() >= 0 and (
-                                futureMarioPos == flower1 or futureMarioPos == flower2))
-                        or not (fatherNode.getFlower() == 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() > 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() == 0 and currentNode.getFlower() > 0)):
-                        return True
-                    else:
-                        return False
-                    """ if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        return True
-                    else:
-                        return False"""
-                else:
-                    return True
-            elif operator == "up":
-                futureMarioPos = self.upMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if (((fatherNode.getStar() >= 0 and (futureMarioPos == start1 or futureMarioPos == start2))
-                        or not (fatherNode.getStar() == 0 and currentNode.getStar()-1 <= 0)
-                            or (fatherNode.getStar() > 0 and currentNode.getStar()-1 >= 1)
-                            or (fatherNode.getStar() == 0 and currentNode.getStar() > 0)) or
-                            (fatherNode.getFlower() >= 0 and (
-                                futureMarioPos == flower1 or futureMarioPos == flower2))
-                       # review
-                        or not (fatherNode.getFlower() == 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() > 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() == 0 and currentNode.getFlower() > 0)):
-                        print("up flower", fatherNode.getFlower(), currentNode.getFlower(
-                        ), futureMarioPos, flower1, flower2)
-                        print("up star", fatherNode.getStar(
-                        ), currentNode.getStar(), futureMarioPos, start1, start2)
-                        return True
-                    else:
-                        return False
-                    """if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        return True
-                    else:
-                        return False"""
-                else:
-                    return True
-            elif operator == "down":
-                futureMarioPos = self.downMovement(marioPos)
-                if fatherNode.getMarioPos() == futureMarioPos:
-                    if ((fatherNode.getStar() >= 0 and (futureMarioPos == start1 or futureMarioPos == start2))
-                        or not (fatherNode.getStar() == 0 and currentNode.getStar()-1 <= 0)
-                            or (fatherNode.getStar() > 0 and currentNode.getStar()-1 >= 1)
-                            or (fatherNode.getStar() == 0 and currentNode.getStar() > 0) and
-                            (fatherNode.getFlower() >= 0 and (
-                                futureMarioPos == flower1 or futureMarioPos == flower2))
-                        or not (fatherNode.getFlower() == 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() > 0 and currentNode.getFlower() == 0)
-                            or (fatherNode.getFlower() == 0 and currentNode.getFlower() > 0)):
-                        print("down flower", fatherNode.getFlower(), currentNode.getFlower(
-                        ), futureMarioPos, flower1, flower2)
-                        print("down star", fatherNode.getStar(
-                        ), currentNode.getStar(), futureMarioPos, start1, start2)
-                        return True
-                    else:
-                        return False
-                    """if ((fatherNode.getStar() > 0 and currentNode.getStar() == 1) or (fatherNode.getFlower() > 0 and self.getFlower() == 1)
-                            or (currentNode.getStar() == 0 and (futureMarioPos == start1 or futureMarioPos == start2)) or (currentNode.getFlower() == 0 and (futureMarioPos == flower1 or futureMarioPos == flower2))
-                            or (currentNode.getStar() > 0 and fatherNode.getStar() == 0) or (currentNode.getFlower() > 0 and fatherNode.getFlower() == 0)):
-                        return True
-                    else:
-                        return False"""
-                else:
-                    return True
-        return True
-
     def avoidGoBack2(self, nextMarioPos):
         currentNode = self
         fatherNode = self.getFather()
@@ -362,11 +137,9 @@ return True"""
         nextNodePosition = nextMarioPos
         if grandFatherNode.getOperator() != "first father":
             if (grandFatherNode.getMarioPos() == nextNodePosition):
-                print("flowercant", grandFatherNode.getFlower(),
-                      currentNode.getFlower())
+                # print("flowercant", grandFatherNode.getFlower(), currentNode.getFlower())
                 if (grandFatherNode.getStar() != currentNode.getStar() or grandFatherNode.getFlower() != currentNode.getFlower() or (fatherNode.getFlower() == 1 and currentNode.getFlower() == 0)):
-                    print("flowercantIf", grandFatherNode.getFlower(),
-                          currentNode.getFlower())
+                    # print("flowercantIf", grandFatherNode.getFlower(), currentNode.getFlower())
                     return True
                 else:
                     return False
@@ -378,14 +151,11 @@ return True"""
         grandFatherNode = fatherNode.getFather()
         nextNodePosition = nextMarioPos
         while grandFatherNode.getOperator() != "first father":
-            print("father", grandFatherNode.getMarioPos(),
-                  "mia", nextNodePosition)
+            # print("father", grandFatherNode.getMarioPos(),"mia", nextNodePosition)
             if (grandFatherNode.getMarioPos() == nextNodePosition):
-                print("flowercant", grandFatherNode.getFlower(),
-                      currentNode.getFlower())
+                # print("flowercant", grandFatherNode.getFlower(),currentNode.getFlower())
                 if (grandFatherNode.getStar() != currentNode.getStar() or grandFatherNode.getFlower() != currentNode.getFlower() or (fatherNode.getFlower() == 1 and currentNode.getFlower() == 0)):
-                    print("flowercantIf", grandFatherNode.getFlower(),
-                          currentNode.getFlower())
+                    # print("flowercantIf", grandFatherNode.getFlower(),currentNode.getFlower())
                     grandFatherNode = grandFatherNode.getFather()
                 else:
                     return False
@@ -397,7 +167,6 @@ return True"""
         i = posMario[0]
         j = posMario[1]
         self.__state[i, j] = self.getFather().getAwaitingCharacter()
-        # print("[ " + str(i) + " ] [ " + str(j + 1) + " ]") if i == 6 else 0
         self.takeDecision([i, j+1])
         return self
 
@@ -452,8 +221,6 @@ return True"""
     def takeDecision(self, pos):
         i = pos[0]
         j = pos[1]
-        # print("Pos: " + str(i) + " and " + str(j))
-        # self.setNewCost(pos)
         if self.__state[i, j] == self.PRINCESS:
             self.setAwaitingCharacter(self.EMPTY)
             self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
@@ -469,7 +236,7 @@ return True"""
         elif self.__state[i, j] == self.FLOWER:
             if self.getStar() == 0:  # Mario can get the flower
                 self.setFlower(self.getFlower() + 1)
-                print("cantidad flowers", self.getFlower())
+                # print("cantidad flowers", self.getFlower())
                 self.setAwaitingCharacter(self.EMPTY)
             else:
                 self.setStar(self.getStar() - 1 if self.getStar() > 0 else 0)
@@ -487,16 +254,6 @@ return True"""
 
         if self.__state[i, j] != self.RESCUED_PRINCESS:
             self.__state[i, j] = self.MARIO
-
-        # print("DESPUÉS DE TAKE DECISION: " + str(i) + " " + str(j))
-        # print("Estado después de rake decision:")
-        # print(self.getState())
-
-    def showDepth(self):
-        print("The node's depth is: " + str(self.__depth))
-
-    def showOperator(self):
-        print("The operator used to get to this node was: " + self.__operator)
 
     def recreateSolution(self):
         directions = []
@@ -525,22 +282,6 @@ return True"""
                     marioPos[1] = j
 
         self.setMarioPos(marioPos)
-        # print("DESPUES DE SEARCH FOR MARIO: " +
-        #      str(marioPos[0]) + " " + str(marioPos[1]))
-        return marioPos
-
-    def searchForMario(self):
-        marioPos = [-1, -1]  # Mario position [x,y]
-        state = self.__state
-        for i in range(10):
-            for j in range(10):
-                if (state[i, j] == self.MARIO):
-                    marioPos[0] = i
-                    marioPos[1] = j
-
-        self.setMarioPos(marioPos)
-        # print("DESPUES DE SEARCH FOR MARIO: " +
-        #      str(marioPos[0]) + " " + str(marioPos[1]))
         return marioPos
 
     def isGoal(self):

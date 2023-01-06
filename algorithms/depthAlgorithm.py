@@ -26,15 +26,13 @@ class DepthAlgorithm:
         depth = 0
 
         while not (currentNode.isGoal()):
-            print("---")
-            print(currentNode.getMarioPos())
-
+            # print("---")
+            # print(currentNode.getMarioPos())
             stack.pop(0)
             expandedNodes += 1
+
             # Check if right side is free
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
-                # if (currentNode.compareCicles("right", start1, start2, flower1, flower2)):
-                # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "right") and currentNode.compareFatherAll(marioPos, marioPos0, "right")):
                 son = Node(currentNode.getState(), currentNode,
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -46,13 +44,10 @@ class DepthAlgorithm:
                     stack.insert(0, son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-                    print(son.getMarioPos())
+                    # print(son.getMarioPos())
 
             # Check if left side is free
-            # if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1 and currentNode.getFather().getOperator() != "right"):
             if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
-                # if (currentNode.compareCicles("left", start1, start2, flower1, flower2)):
-                # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "left") and currentNode.compareFatherAll(marioPos, marioPos0, "left")):
                 son = Node(currentNode.getState(), currentNode,
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -64,13 +59,10 @@ class DepthAlgorithm:
                     stack.insert(0, son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-                    print(son.getMarioPos())
+                    # print(son.getMarioPos())
 
             # Check if down side is free
-            # if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "up"):
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
-                # if (currentNode.compareCicles("down", start1, start2, flower1, flower2)):
-                # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "down") and currentNode.compareFatherAll(marioPos, marioPos0, "down")):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -82,13 +74,10 @@ class DepthAlgorithm:
                     stack.insert(0, son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-                    print(son.getMarioPos())
+                    # print(son.getMarioPos())
 
             # Check if up side is free
-            # if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1 and currentNode.getFather().getOperator() != "down"):
             if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
-                # if (currentNode.compareCicles("up", start1, start2, flower1, flower2)):
-                # if (currentNode.compareStateCicle(currentNode.getFather(), marioPos, "up") and currentNode.compareFatherAll(marioPos, marioPos0, "up")):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -100,22 +89,19 @@ class DepthAlgorithm:
                     stack.insert(0, son)
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
-                    print(son.getMarioPos())
+                    # print(son.getMarioPos())
 
             currentNode = stack[0]
             marioPos = currentNode.getMarioPos()
 
-        # print(currentNode.getFather().getDepth())
-        # print(currentNode.getState())
-        # print(currentNode.recreateSolution())
         elapsedTime = process_time() - startTime
         elapsedTimeFormatted = "%.10f s." % elapsedTime
         self.setComputingTime(elapsedTimeFormatted)
 
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
-        print("expandido", expandedNodes+1)  # Good
-        print("profundidad", depth)
+        print("Nodos expandidos: ", expandedNodes+1)  # Good
+        print("Profundidad: ", depth)
         print("El costo final de la solución es: " + str(currentNode.getCost()))
-        print(stack[0].recreateSolution())
+        print(currentNode.recreateSolution())
         return [solutionWorld, expandedNodes+1, depth]

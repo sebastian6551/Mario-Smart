@@ -41,10 +41,9 @@ class StarAlgorithm:
 
         while not (currentNode.isGoal()):
             # Check if right side is free
-            print("---")
-            print(currentNode.getMarioPos())
+            # print("---")
+            # print(currentNode.getMarioPos())
             if (not (marioPos[1]+1 > 9) and currentNode.getState()[marioPos[0], marioPos[1]+1] != 1):
-                # if (currentNode.compareCicles("right")):
                 son = Node(currentNode.getState(), currentNode,
                            "right", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -62,11 +61,10 @@ class StarAlgorithm:
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
-                    print(son.getMarioPos(), "heurística: ", son.getHeuristic())
+                    # print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if left side is free
             if (not (marioPos[1]-1 < 0) and currentNode.getState()[marioPos[0], marioPos[1]-1] != 1):
-               # if (currentNode.compareCicles("left")):
                 son = Node(currentNode.getState(), currentNode,
                            "left", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -84,11 +82,10 @@ class StarAlgorithm:
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
-                    print(son.getMarioPos(), "heurística: ", son.getHeuristic())
+                    # print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if down side is free
             if (not (marioPos[0]+1 > 9) and currentNode.getState()[marioPos[0]+1, marioPos[1]] != 1):
-               # if (currentNode.compareCicles("down")):
                 son = Node(currentNode.getState(), currentNode,
                            "down", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -106,11 +103,10 @@ class StarAlgorithm:
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
-                    print(son.getMarioPos(), "heurística: ", son.getHeuristic())
+                    # print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             # Check if up side is free
             if (not (marioPos[0]-1 < 0) and currentNode.getState()[marioPos[0]-1, marioPos[1]] != 1):
-                # if (currentNode.compareCicles("up")):
                 son = Node(currentNode.getState(), currentNode,
                            "up", currentNode.getDepth() + 1, currentNode.getCost(), currentNode.getStar(), currentNode.getFlower())
 
@@ -128,24 +124,24 @@ class StarAlgorithm:
                     if (son.getDepth() > depth):
                         depth = son.getDepth()
 
-                    print(son.getMarioPos(), "heurística: ", son.getHeuristic())
+                    # print(son.getMarioPos(), "heurística: ", son.getHeuristic())
 
             stack.remove(currentNode)
 
             currentNode = self.getNodeMinSumCostHeuristic(stack)
             expandedNodes += 1
             marioPos = currentNode.getMarioPos()
-            print("Mario pos:", marioPos)
+            # print("Mario pos:", marioPos)
 
         elapsedTime = process_time() - startTime
         elapsedTimeFormatted = "%.10f s." % elapsedTime
         self.setComputingTime(elapsedTimeFormatted)
 
-        print("Heurística meta: ", currentNode.getHeuristic())
-        print(currentNode.recreateSolution())
         solution = currentNode.recreateSolutionWorld()
         solutionWorld = solution[::-1]
-        print("expandido", expandedNodes+1)  # Good
-        print("profundidad", depth)
+        print("Heurística meta: ", currentNode.getHeuristic())
+        print("Nodos expandidos: ", expandedNodes+1)  # Good
+        print("Profundidad: ", depth)
         print("El costo final de la solución es: " + str(currentNode.getCost()))
+        print(currentNode.recreateSolution())
         return [solutionWorld, expandedNodes+1, depth]
